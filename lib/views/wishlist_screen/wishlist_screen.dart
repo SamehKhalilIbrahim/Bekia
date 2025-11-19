@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:test_project/main.dart';
+import 'package:bekia/main.dart';
 import '../../models/product_model.dart';
 import '../../services/constants.dart';
 import 'wishlist_product_card.dart';
@@ -16,8 +16,9 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   List<Product>? favProducts;
-  final Box<Product> favoritesBox =
-      Hive.box<Product>(HiveConstant.favoritesProductBox);
+  final Box<Product> favoritesBox = Hive.box<Product>(
+    HiveConstant.favoritesProductBox,
+  );
 
   @override
   void initState() {
@@ -39,19 +40,16 @@ class _WishlistScreenState extends State<WishlistScreen> {
               ? SliverToBoxAdapter(
                   child: SizedBox(
                     height: context.height,
-                    child: Center(
+                    child: const Center(
                       child: Text("You Don't have Wishlist Products"),
                     ),
                   ),
                 )
               : SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final product = favProducts![index];
-                      return FavouriteProductCard(product: product);
-                    },
-                    childCount: favProducts!.length,
-                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final product = favProducts![index];
+                    return FavouriteProductCard(product: product);
+                  }, childCount: favProducts!.length),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     mainAxisExtent: 120,
@@ -59,7 +57,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     crossAxisSpacing: 8,
                   ),
                 ),
-        )
+        ),
       ],
     );
   }

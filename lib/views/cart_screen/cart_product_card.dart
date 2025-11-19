@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:test_project/views/home_screen/shimmer/shimmer.dart';
 import '../../../models/product_model.dart';
 import '../../../ui/themes/font.dart';
 import '../../services/constants.dart';
-import '../cart_screen/cart_screen.dart';
+import '../home_screen/shimmer/shimmer.dart';
 
 class CartProductCard extends StatefulWidget {
   final Product product;
@@ -32,10 +31,8 @@ class CartProductCardState extends State<CartProductCard> {
             padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
             child: CachedNetworkImage(
               imageUrl: widget.product.imageUrl[0],
-              placeholder: (context, url) => const ShimmerImage(
-                hight: 110,
-                width: 140,
-              ),
+              placeholder: (context, url) =>
+                  const ShimmerImage(hight: 110, width: 140),
               filterQuality: FilterQuality.low,
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageBuilder: (context, imageProvider) {
@@ -104,40 +101,42 @@ class CartProductCardState extends State<CartProductCard> {
             ),
           ),
           Positioned(
-              bottom: 15,
-              right: 0,
-              child: SizedBox(
-                width: 110,
-                height: 35,
-                child: ElevatedButton(
-
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => CartScreen()));
-                    onPressed: () {
-                      setState(() {
-                        if (!cartBox.containsKey(widget.product.id)) {
-                          cartBox.put(widget.product.id, widget.product);
-                        } else {
-                          cartBox.delete(widget.product.id);
-                        }
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColorLight,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      "Add",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: Font.semiBold),
-                    )),
-              )),
+            bottom: 15,
+            right: 0,
+            child: SizedBox(
+              width: 110,
+              height: 35,
+              child: ElevatedButton(
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => CartScreen()));
+                onPressed: () {
+                  setState(() {
+                    if (!cartBox.containsKey(widget.product.id)) {
+                      cartBox.put(widget.product.id, widget.product);
+                    } else {
+                      cartBox.delete(widget.product.id);
+                    }
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColorLight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "Add",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: Font.semiBold,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

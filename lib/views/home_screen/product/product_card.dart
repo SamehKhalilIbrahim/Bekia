@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_project/cubit/hive_cubit/hive_cubit.dart';
-import 'package:test_project/views/home_screen/shimmer/shimmer.dart';
+
+import '../../../cubit/hive_cubit/hive_cubit.dart';
 import '../../../models/product_model.dart';
 import '../../../ui/themes/font.dart';
+import '../shimmer/shimmer.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -24,10 +25,8 @@ class ProductCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
             child: CachedNetworkImage(
               imageUrl: product.imageUrl[0],
-              placeholder: (context, url) => const ShimmerImage(
-                hight: 150,
-                width: 200,
-              ),
+              placeholder: (context, url) =>
+                  const ShimmerImage(hight: 150, width: 200),
               filterQuality: FilterQuality.low,
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageBuilder: (context, imageProvider) {
@@ -85,8 +84,9 @@ class ProductCard extends StatelessWidget {
             right: 3,
             child: BlocBuilder<HiveCubit, HiveState>(
               builder: (context, state) {
-                bool isFavorite =
-                    context.read<HiveCubit>().isProductFavorite(product.id);
+                bool isFavorite = context.read<HiveCubit>().isProductFavorite(
+                  product.id,
+                );
 
                 return IconButton(
                   onPressed: () {

@@ -56,11 +56,11 @@ class CustomSearchDelegate extends SearchDelegate {
     }
 
     if (query.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('Type to start searching...'),
       );
     } else if (matchQuery.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No products found.'),
       );
     } else {

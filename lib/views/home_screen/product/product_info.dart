@@ -1,13 +1,14 @@
 import 'dart:ui';
 
+import 'package:bekia/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:test_project/cubit/product_cubit/product_cubit_cubit.dart';
-import 'package:test_project/main.dart';
-import 'package:test_project/models/product_model.dart';
+
 import '../../../cubit/hive_cubit/hive_cubit.dart';
+import '../../../cubit/product_cubit/product_cubit_cubit.dart';
+import '../../../models/product_model.dart';
 import '../../../services/constants.dart';
 import '../../../ui/themes/font.dart';
 import '../shimmer/shimmer.dart';
@@ -30,8 +31,9 @@ class ProductInfo extends StatelessWidget {
         actions: [
           BlocBuilder<HiveCubit, HiveState>(
             builder: (context, state) {
-              bool isFavorite =
-                  context.read<HiveCubit>().isProductFavorite(product.id);
+              bool isFavorite = context.read<HiveCubit>().isProductFavorite(
+                product.id,
+              );
 
               return IconButton(
                 onPressed: () {
@@ -77,7 +79,8 @@ class ProductInfo extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor.withOpacity(0.2),
                           borderRadius: const BorderRadius.vertical(
-                              bottom: Radius.circular(20)),
+                            bottom: Radius.circular(20),
+                          ),
                         ),
                         child: Column(
                           children: [
@@ -85,16 +88,17 @@ class ProductInfo extends StatelessWidget {
                               Hero(
                                 tag: "product_${product.id}",
                                 child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                  ),
                                   height: context.height / 2.6,
                                   child: CachedNetworkImage(
                                     imageUrl: images[selectedImage],
                                     placeholder: (context, url) =>
                                         const ShimmerImage(
-                                      hight: 150,
-                                      width: 200,
-                                    ),
+                                          hight: 150,
+                                          width: 200,
+                                        ),
                                     filterQuality: FilterQuality.low,
                                     imageBuilder: (context, imageProvider) {
                                       return Image(
@@ -114,26 +118,31 @@ class ProductInfo extends StatelessWidget {
                                       context
                                           .read<ProductCubit>()
                                           .changeSelectedImage(
-                                              images.indexOf(image));
+                                            images.indexOf(image),
+                                          );
                                     },
                                     child: Container(
                                       height: context.height / 13.5,
                                       width: context.width / 6.5,
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      decoration: selectedImage ==
-                                              images.indexOf(image)
+                                        horizontal: 5,
+                                      ),
+                                      decoration:
+                                          selectedImage == images.indexOf(image)
                                           ? BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               border: Border.all(
-                                                  width: 0.5,
-                                                  color: Theme.of(context)
-                                                      .primaryColorLight),
+                                                width: 0.5,
+                                                color: Theme.of(
+                                                  context,
+                                                ).primaryColorLight,
+                                              ),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Theme.of(context)
-                                                      .primaryColorLight,
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).primaryColorLight,
                                                   blurRadius: 15,
                                                   offset: const Offset(0, 3),
                                                 ),
@@ -149,9 +158,9 @@ class ProductInfo extends StatelessWidget {
                                         imageUrl: image,
                                         placeholder: (context, url) =>
                                             ShimmerImage(
-                                          hight: context.height / 13.5,
-                                          width: context.width / 6.5,
-                                        ),
+                                              hight: context.height / 13.5,
+                                              width: context.width / 6.5,
+                                            ),
                                         filterQuality: FilterQuality.low,
                                         imageBuilder: (context, imageProvider) {
                                           return Image(
@@ -171,7 +180,9 @@ class ProductInfo extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 20),
+                      horizontal: 10,
+                      vertical: 20,
+                    ),
                     child: SizedBox(
                       width: context.width,
                       height: context.height / 3,
@@ -201,10 +212,11 @@ class ProductInfo extends StatelessWidget {
                                 height: 27,
                                 width: 60,
                                 decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .cardColor
-                                        .withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(6)),
+                                  color: Theme.of(
+                                    context,
+                                  ).cardColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -213,17 +225,20 @@ class ProductInfo extends StatelessWidget {
                                     Text(
                                       product.rating.toString(),
                                       style: const TextStyle(
-                                          fontFamily: Font.bold, fontSize: 13),
+                                        fontFamily: Font.bold,
+                                        fontSize: 13,
+                                      ),
                                     ),
                                     Icon(
                                       Icons.star_rate_rounded,
-                                      color:
-                                          Theme.of(context).primaryColorLight,
+                                      color: Theme.of(
+                                        context,
+                                      ).primaryColorLight,
                                       size: 20,
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           const SizedBox(height: 3),
@@ -299,10 +314,7 @@ class ProductInfo extends StatelessWidget {
                       children: [
                         const Text(
                           "Price:",
-                          style: TextStyle(
-                            fontFamily: Font.bold,
-                            fontSize: 13,
-                          ),
+                          style: TextStyle(fontFamily: Font.bold, fontSize: 13),
                         ),
                         Text(
                           "\$${product.price.toString()}",
@@ -332,11 +344,12 @@ class ProductInfo extends StatelessWidget {
                       child: const Text(
                         'Add To Cart',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

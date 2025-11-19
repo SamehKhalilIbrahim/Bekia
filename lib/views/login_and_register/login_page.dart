@@ -1,14 +1,14 @@
+import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/main.dart';
-import 'package:test_project/views/home_screen/navigation.dart';
-import 'package:test_project/views/login_and_register/register_page.dart';
-import 'package:test_project/views/login_and_register/reset_password.dart';
 
 import '../../ui/animations/fade_animation.dart';
 import '../../ui/themes/app_color.dart';
+import '../home_screen/navigation.dart';
+import 'register_page.dart';
+import 'reset_password.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -23,8 +23,9 @@ class _LoginPageState extends State<LoginPage> {
 
   final formkey = GlobalKey<FormState>();
 
-  RegExp alphaNumeric =
-      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  RegExp alphaNumeric = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 60,
-              ),
+              const SizedBox(height: 60),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -61,9 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     FadeAnimation(
                       delay: 1.1,
                       child: Text(
@@ -86,9 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         FadeAnimation(
                           delay: 0.7,
                           child: Padding(
@@ -97,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: BoxDecoration(
                                 color: Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  const BoxShadow(
+                                boxShadow: const [
+                                  BoxShadow(
                                     color: Color.fromARGB(142, 245, 102, 59),
                                     blurRadius: 20,
                                     offset: Offset(0, 10),
@@ -109,22 +104,27 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.only(
-                                        top: 5, bottom: 3),
+                                      top: 5,
+                                      bottom: 3,
+                                    ),
                                     decoration: BoxDecoration(
                                       border: Border(
                                         bottom: BorderSide(
-                                            color: Colors.grey[200]!),
+                                          color: Colors.grey[200]!,
+                                        ),
                                       ),
                                     ),
                                     child: TextFormField(
-                                      cursorColor:
-                                          Theme.of(context).primaryColorLight,
+                                      cursorColor: Theme.of(
+                                        context,
+                                      ).primaryColorLight,
                                       controller: emailController,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email,
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
+                                          color: Theme.of(
+                                            context,
+                                          ).primaryColorLight,
                                         ),
                                         hintText: "Email",
                                         border: InputBorder.none,
@@ -132,8 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return 'Please enter your email';
-                                        } else if (!alphaNumeric
-                                            .hasMatch(value)) {
+                                        } else if (!alphaNumeric.hasMatch(
+                                          value,
+                                        )) {
                                           if (!value.contains("@gmail.com")) {
                                             return "Your mail must has '@gmail.com'";
                                           } else {
@@ -148,10 +149,13 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   Container(
                                     padding: const EdgeInsets.only(
-                                        top: 3, bottom: 5),
+                                      top: 3,
+                                      bottom: 5,
+                                    ),
                                     child: TextFormField(
-                                      cursorColor:
-                                          Theme.of(context).primaryColorLight,
+                                      cursorColor: Theme.of(
+                                        context,
+                                      ).primaryColorLight,
                                       controller: passwordController,
                                       obscureText: secureText,
                                       enableSuggestions: false,
@@ -172,8 +176,9 @@ class _LoginPageState extends State<LoginPage> {
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.key_rounded,
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
+                                          color: Theme.of(
+                                            context,
+                                          ).primaryColorLight,
                                         ),
                                         suffixIcon: IconButton(
                                           onPressed: () {
@@ -185,8 +190,9 @@ class _LoginPageState extends State<LoginPage> {
                                             secureText
                                                 ? Icons.visibility_rounded
                                                 : Icons.visibility_off_rounded,
-                                            color: Theme.of(context)
-                                                .primaryColorLight,
+                                            color: Theme.of(
+                                              context,
+                                            ).primaryColorLight,
                                           ),
                                           tooltip: 'Toggle Obscure Text',
                                         ),
@@ -204,13 +210,14 @@ class _LoginPageState extends State<LoginPage> {
                           delay: 0.8,
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PasswordRecoveryPage(),
-                              ));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PasswordRecoveryPage(),
+                                ),
+                              );
                             },
-                            child: const Text(
-                              "Forget Password?",
-                            ),
+                            child: const Text("Forget Password?"),
                           ),
                         ),
                         FadeAnimation(
@@ -224,17 +231,20 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 if (formkey.currentState!.validate()) {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const NavigationScreen()));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NavigationScreen(),
+                                    ),
+                                  );
                                 } else {
                                   print("Not Valid");
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).primaryColorLight,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).primaryColorLight,
                                 minimumSize: Size(context.width * 0.5, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
@@ -243,9 +253,10 @@ class _LoginPageState extends State<LoginPage> {
                               child: const Text(
                                 'Login',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -259,9 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                                 "assets/images/icons/gmail.png",
                                 height: context.height / 17,
                               ),
-                              const SizedBox(
-                                width: 20,
-                              ),
+                              const SizedBox(width: 20),
                               Image.asset(
                                 "assets/images/icons/facebook.png",
                                 height: context.height / 17,
@@ -269,21 +278,24 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        const SizedBox(height: 5),
                         FadeAnimation(
                           delay: 1,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Don’t have an account?  ",
-                                  style: Theme.of(context).textTheme.bodySmall),
+                              Text(
+                                "Don’t have an account?  ",
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => RegisterPage(),
-                                  ));
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterPage(),
+                                    ),
+                                  );
                                 },
                                 child: Text(
                                   "Sign up",

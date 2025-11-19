@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:test_project/views/home_screen/home.dart';
 
 import '../cart_screen/cart_screen.dart';
 import '../profile_screen/profile_screen.dart';
 import '../wishlist_screen/wishlist_screen.dart';
+import 'home.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -68,13 +67,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 HomeScreen(scrollController: _scrollController),
-                WishlistScreen(
-                  scrollController: _scrollController,
-                ),
-                CartScreen(
-                  scrollController: _scrollController,
-                ),
-                ProfileScreen(),
+                WishlistScreen(scrollController: _scrollController),
+                CartScreen(scrollController: _scrollController),
+                const ProfileScreen(),
               ],
             ),
             ValueListenableBuilder<bool>(
@@ -135,10 +130,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
               animationDuration: const Duration(milliseconds: 200),
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,
-              overlayColor: MaterialStateProperty.all(
-                  Theme.of(context).primaryColorLight.withOpacity(0.9)),
-              indicatorColor:
-                  Theme.of(context).primaryColorLight.withOpacity(0.7),
+              overlayColor: WidgetStateProperty.all(
+                Theme.of(context).primaryColorLight.withOpacity(0.9),
+              ),
+              indicatorColor: Theme.of(
+                context,
+              ).primaryColorLight.withOpacity(0.7),
               selectedIndex: _selectedIndex,
               onDestinationSelected: _onItemTapped,
               destinations: const [

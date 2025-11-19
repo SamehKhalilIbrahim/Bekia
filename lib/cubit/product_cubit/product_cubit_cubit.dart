@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:test_project/models/product_model.dart';
-import 'package:test_project/services/constants.dart';
 
+import '../../models/product_model.dart';
+import '../../services/constants.dart';
 import '../../services/remote/api_constrains.dart';
 
 part 'product_cubit_state.dart';
@@ -14,7 +14,8 @@ class ProductCubit extends Cubit<ProductCubitState> {
     try {
       emit(ProductLoading());
       final products = await ProductServices().fetchProducts(
-        path: ApiConstant.baseUrl +
+        path:
+            ApiConstant.baseUrl +
             ApiConstant.productEndpoint +
             (category != "All" ? ApiConstant.category + category : ""),
       );

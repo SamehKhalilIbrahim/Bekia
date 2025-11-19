@@ -8,7 +8,6 @@ import '../../cubit/category_cubit/category_cubit.dart'; // New Cubit for catego
 
 import '../../ui/themes/app_color.dart';
 import '../../ui/themes/font.dart';
-import 'home_widgets/product_list.dart';
 import 'product/product_card.dart';
 import 'search/search_delegate.dart';
 import 'shimmer/shimmer.dart';
@@ -16,7 +15,7 @@ import 'shimmer/shimmer.dart';
 class HomeScreen extends StatelessWidget {
   final ScrollController scrollController;
 
-  HomeScreen({super.key, required this.scrollController});
+  const HomeScreen({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         const Appbar(),
         const SearchWidget(),
         Banner(),
-        CategoryList(),
+        const CategoryList(),
         const ProductGrid(),
       ],
     );

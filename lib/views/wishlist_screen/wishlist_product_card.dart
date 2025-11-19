@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:test_project/views/home_screen/shimmer/shimmer.dart';
 import '../../../models/product_model.dart';
 import '../../../ui/themes/font.dart';
 import '../../services/constants.dart';
+import '../home_screen/shimmer/shimmer.dart';
 
 class FavouriteProductCard extends StatefulWidget {
   final Product product;
@@ -16,8 +16,9 @@ class FavouriteProductCard extends StatefulWidget {
 }
 
 class _FavouriteProductCardState extends State<FavouriteProductCard> {
-  final Box<Product> favoritesBox =
-      Hive.box<Product>(HiveConstant.favoritesProductBox);
+  final Box<Product> favoritesBox = Hive.box<Product>(
+    HiveConstant.favoritesProductBox,
+  );
   final Box<Product> cartBox = Hive.box<Product>(HiveConstant.cartProductBox);
 
   @override
@@ -36,10 +37,8 @@ class _FavouriteProductCardState extends State<FavouriteProductCard> {
             padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
             child: CachedNetworkImage(
               imageUrl: widget.product.imageUrl[0],
-              placeholder: (context, url) => const ShimmerImage(
-                hight: 110,
-                width: 140,
-              ),
+              placeholder: (context, url) =>
+                  const ShimmerImage(hight: 110, width: 140),
               filterQuality: FilterQuality.low,
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageBuilder: (context, imageProvider) {

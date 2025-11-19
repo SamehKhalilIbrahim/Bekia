@@ -8,7 +8,7 @@ class OnboardingScreen extends StatelessWidget {
   final String description;
   final String imagePath;
 
-  OnboardingScreen({
+  const OnboardingScreen({super.key, 
     required this.title,
     required this.description,
     required this.imagePath,
@@ -23,7 +23,7 @@ class OnboardingScreen extends StatelessWidget {
         children: [
           FadeAnimation(
               delay: 0.2, child: SvgPicture.asset(imagePath, height: 300)),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           FadeAnimation(
             delay: 0.3,
             child: Text(
@@ -32,7 +32,7 @@ class OnboardingScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           FadeAnimation(
             delay: 0.4,
             child: Text(

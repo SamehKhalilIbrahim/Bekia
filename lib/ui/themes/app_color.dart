@@ -6,7 +6,7 @@ class AppColor {
 
   static Color externalColor = Colors.black.withOpacity(0.1);
   static Color externalColorDark =
-      Color.fromARGB(255, 255, 208, 169).withOpacity(0.2);
+      const Color.fromARGB(255, 255, 208, 169).withOpacity(0.2);
   static Color bodyPrimaryColor = const Color(0xffFFFFEC);
 
   static Color bodyPrimaryColorDark = const Color(0xff393D46);

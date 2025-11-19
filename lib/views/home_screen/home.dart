@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../cubit/product_cubit/product_cubit_cubit.dart';
@@ -10,14 +9,13 @@ import '../../cubit/category_cubit/category_cubit.dart'; // New Cubit for catego
 import '../../ui/themes/app_color.dart';
 import '../../ui/themes/font.dart';
 import 'home_widgets/product_list.dart';
-import 'product/product_card.dart';
 import 'search/search_delegate.dart';
 import 'shimmer/shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
   final ScrollController scrollController;
 
-  HomeScreen({super.key, required this.scrollController});
+  const HomeScreen({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {

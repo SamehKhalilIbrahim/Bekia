@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:test_project/views/login_and_register/login_page.dart';
-
 import '../../custom_widgets/dot_slide.dart';
+import '../login_and_register/login_page.dart';
 import 'on_boarding_page.dart';
 
 class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
+
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
@@ -79,11 +80,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
         if (currentIndex == onboardingData.length - 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
           _controller.nextPage(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
         }
@@ -97,7 +98,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: CircularProgressIndicator(
               value: progress,
               valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColorLight),
+                Theme.of(context).primaryColorLight,
+              ),
               backgroundColor: Colors.grey[300],
             ),
           ),

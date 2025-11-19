@@ -1,12 +1,12 @@
+import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/main.dart';
 
 import '../../ui/animations/fade_animation.dart';
 import '../../ui/themes/app_color.dart';
 import '../../ui/themes/font.dart';
 
 class PasswordRecoveryPage extends StatefulWidget {
-  PasswordRecoveryPage({super.key});
+  const PasswordRecoveryPage({super.key});
 
   @override
   State<PasswordRecoveryPage> createState() => PasswordRecoveryPageState();
@@ -16,8 +16,9 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   TextEditingController emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  RegExp emailRegExp =
-      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  RegExp emailRegExp = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,7 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -54,9 +53,7 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     FadeAnimation(
                       delay: 0.7,
                       child: Text(
@@ -70,7 +67,7 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(60),
                       topRight: Radius.circular(60),
                     ),
@@ -79,18 +76,16 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         FadeAnimation(
                           delay: 0.8,
                           child: Padding(
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromARGB(142, 245, 102, 59),
                                     blurRadius: 20,
@@ -101,19 +96,23 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                               child: Column(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10, top: 3, bottom: 3),
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      top: 3,
+                                      bottom: 3,
+                                    ),
                                     child: TextFormField(
                                       controller: emailController,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText: "Email",
                                         border: InputBorder.none,
                                       ),
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return 'Please enter your email';
-                                        } else if (!emailRegExp
-                                            .hasMatch(value)) {
+                                        } else if (!emailRegExp.hasMatch(
+                                          value,
+                                        )) {
                                           if (!value.contains("@gmail.com")) {
                                             return "Your email must have '@gmail.com'";
                                           } else {
@@ -143,27 +142,30 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                                 if (formKey.currentState!.validate()) {
                                   // Logic to send password reset link
                                   print(
-                                      "Password reset link sent to ${emailController.text}");
+                                    "Password reset link sent to ${emailController.text}",
+                                  );
                                   // Navigate to a confirmation screen or show a success message
                                 } else {
                                   print("Not Valid");
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).primaryColorLight,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).primaryColorLight,
                                 minimumSize: Size(context.width * 0.5, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Send Reset Link',
                                 style: TextStyle(
-                                    fontFamily: Font.semiBold,
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
+                                  fontFamily: Font.semiBold,
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
