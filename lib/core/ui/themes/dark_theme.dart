@@ -1,4 +1,4 @@
-import 'package:bekia/ui/themes/font.dart';
+import 'package:bekia/core/ui/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'app_color.dart';
 

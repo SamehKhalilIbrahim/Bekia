@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../ui/animations/fade_animation.dart';
+import '../../core/ui/animations/fade_animation.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final String title;
   final String description;
   final String imagePath;
 
-  const OnboardingScreen({super.key, 
+  const OnboardingScreen({
+    super.key,
     required this.title,
     required this.description,
     required this.imagePath,
@@ -22,7 +23,9 @@ class OnboardingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FadeAnimation(
-              delay: 0.2, child: SvgPicture.asset(imagePath, height: 300)),
+            delay: 0.2,
+            child: SvgPicture.asset(imagePath, height: 300),
+          ),
           const SizedBox(height: 20),
           FadeAnimation(
             delay: 0.3,

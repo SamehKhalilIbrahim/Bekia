@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../../ui/themes/font.dart';
+import '../../core/ui/themes/font.dart';
 import '../onboarding/on_boarding_view.dart';
 
 class SplashScreen extends StatelessWidget {

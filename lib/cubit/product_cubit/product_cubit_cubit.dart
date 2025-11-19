@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/product_model.dart';
+import '../../core/models/product_model.dart';
 import '../../services/constants.dart';
 import '../../services/remote/api_constrains.dart';
 

@@ -5,9 +5,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'cubit/category_cubit/category_cubit.dart';
 import 'cubit/hive_cubit/hive_cubit.dart';
 import 'cubit/product_cubit/product_cubit_cubit.dart';
-import 'models/product_model.dart';
+import 'core/models/product_model.dart';
 import 'services/constants.dart';
-import 'ui/themes/app_theme.dart';
+import 'core/ui/themes/app_theme.dart';
 import 'views/splash/splash_screen.dart';
 
 void main() async {
@@ -44,4 +44,8 @@ class MainScreen extends StatelessWidget {
 extension SizeDevice on BuildContext {
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;
+}
+
+extension ColorSchemeExtension on BuildContext {
+  ColorScheme get colors => Theme.of(this).colorScheme;
 }

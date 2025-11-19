@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:bekia/main.dart';
-import '../../models/product_model.dart';
+import '../../core/models/product_model.dart';
 import '../../services/constants.dart';
 import 'wishlist_product_card.dart';
 

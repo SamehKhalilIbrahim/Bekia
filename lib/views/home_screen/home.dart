@@ -6,8 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../cubit/product_cubit/product_cubit_cubit.dart';
 import '../../cubit/category_cubit/category_cubit.dart'; // New Cubit for category selection
 
-import '../../ui/themes/app_color.dart';
-import '../../ui/themes/font.dart';
+import '../../core/ui/themes/app_color.dart';
+import '../../core/ui/themes/font.dart';
 import 'home_widgets/product_list.dart';
 import 'search/search_delegate.dart';
 import 'shimmer/shimmer.dart';
@@ -47,10 +47,7 @@ class Appbar extends StatelessWidget {
       titleSpacing: 5,
       title: const Text(
         "Bekia",
-        style: TextStyle(
-          fontFamily: Font.bold,
-          fontSize: 24,
-        ),
+        style: TextStyle(fontFamily: Font.bold, fontSize: 24),
       ),
     );
   }
@@ -69,32 +66,34 @@ class SearchWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-                flex: 6,
-                child: InkWell(
-                  onTap: () {
-                    showSearch(
-                      context: context,
-                      delegate: CustomSearchDelegate(
-                          searchItems: productCubit.products),
-                    );
-                  },
-                  child: Container(
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColor.externalColor,
+              flex: 6,
+              child: InkWell(
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate(
+                      searchItems: productCubit.products,
                     ),
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 15),
-                        Icon(Icons.search, size: 23),
-                        SizedBox(width: 15),
-                        Text('Search your product'),
-                      ],
-                    ),
+                  );
+                },
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColor.externalColor,
                   ),
-                )),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 15),
+                      Icon(Icons.search, size: 23),
+                      SizedBox(width: 15),
+                      Text('Search your product'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(width: 10),
             Expanded(
               flex: 1,
@@ -213,9 +212,9 @@ class CategoryList extends StatelessWidget {
         } else if (categoryState is CategoryLoaded) {
           categories = categoryState.categories;
           selectedCategory = context.read<CategoryCubit>().selectedCategory;
-          context
-              .read<ProductCubit>()
-              .fetchProducts(category: selectedCategory);
+          context.read<ProductCubit>().fetchProducts(
+            category: selectedCategory,
+          );
         } else if (categoryState is CategorySelected) {
           categories = categoryState.categories;
           selectedCategory = categoryState.selectedCategory;
@@ -243,9 +242,9 @@ class CategoryList extends StatelessWidget {
                     onTap: () {
                       if (!isSelected) {
                         context.read<CategoryCubit>().selectCategory(category);
-                        context
-                            .read<ProductCubit>()
-                            .fetchProducts(category: category);
+                        context.read<ProductCubit>().fetchProducts(
+                          category: category,
+                        );
                       }
                     },
                     child: Container(
@@ -264,10 +263,9 @@ class CategoryList extends StatelessWidget {
                             fontFamily: Font.semiBold,
                             fontSize: 14,
                             color: isSelected
-                                ? Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge!
-                                    .color
+                                ? Theme.of(
+                                    context,
+                                  ).textTheme.headlineLarge!.color
                                 : Theme.of(context).textTheme.bodyLarge!.color,
                           ),
                         ),

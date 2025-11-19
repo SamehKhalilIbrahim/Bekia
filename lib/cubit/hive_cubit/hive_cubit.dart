@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/product_model.dart';
+import '../../core/models/product_model.dart';
 import '../../services/constants.dart';
 
 part 'hive_state.dart';
@@ -10,8 +10,9 @@ part 'hive_state.dart';
 class HiveCubit extends Cubit<HiveState> {
   HiveCubit() : super(HiveInitial());
 
-  final Box<Product> favoritesBox =
-      Hive.box<Product>(HiveConstant.favoritesProductBox);
+  final Box<Product> favoritesBox = Hive.box<Product>(
+    HiveConstant.favoritesProductBox,
+  );
 
   bool isProductFavorite(int productId) {
     return favoritesBox.containsKey(productId);

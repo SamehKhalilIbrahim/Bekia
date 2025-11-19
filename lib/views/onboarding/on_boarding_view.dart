@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../custom_widgets/dot_slide.dart';
+import '../../core/widgets/dot_slide.dart';
 import '../login_and_register/login_page.dart';
 import 'on_boarding_page.dart';
 

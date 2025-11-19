@@ -2,7 +2,7 @@ import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
-import '../../models/product_model.dart';
+import '../../core/models/product_model.dart';
 import '../../services/constants.dart';
 import 'cart_product_card.dart';
 

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import '../../../models/product_model.dart';
-import '../../../ui/themes/font.dart';
+import '../../core/models/product_model.dart';
+import '../../core/ui/themes/font.dart';
 import '../../services/constants.dart';
 import '../home_screen/shimmer/shimmer.dart';
 

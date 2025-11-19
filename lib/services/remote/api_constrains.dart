@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
-import '../../models/product_model.dart';
+import '../../core/models/product_model.dart';
 
 class ProductServices {
   Dio dio = Dio();
-  Future<List<Product>> fetchProducts(
-      {required String path, Map<String, dynamic>? query}) async {
+  Future<List<Product>> fetchProducts({
+    required String path,
+    Map<String, dynamic>? query,
+  }) async {
     Response response = await dio.get(path, queryParameters: query);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = response.data;
@@ -16,14 +18,12 @@ class ProductServices {
   }
 
   Future<List> fetchCategoryList({required String path}) async {
-    Response response = await dio.get(
-      path,
-    );
+    Response response = await dio.get(path);
     if (response.statusCode == 200) {
-      List catigories = response.data;
-      return catigories;
+      List categories = response.data;
+      return categories;
     } else {
-      throw Exception('Failed to load catigories');
+      throw Exception('Failed to load categories');
     }
   }
 }

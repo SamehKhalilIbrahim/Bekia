@@ -8,9 +8,9 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../../cubit/hive_cubit/hive_cubit.dart';
 import '../../../cubit/product_cubit/product_cubit_cubit.dart';
-import '../../../models/product_model.dart';
+import '../../../core/models/product_model.dart';
 import '../../../services/constants.dart';
-import '../../../ui/themes/font.dart';
+import '../../../core/ui/themes/font.dart';
 import '../shimmer/shimmer.dart';
 
 class ProductInfo extends StatelessWidget {

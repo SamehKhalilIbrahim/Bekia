@@ -6,8 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../cubit/product_cubit/product_cubit_cubit.dart';
 import '../../cubit/category_cubit/category_cubit.dart'; // New Cubit for category selection
 
-import '../../ui/themes/app_color.dart';
-import '../../ui/themes/font.dart';
+import '../../core/ui/themes/app_color.dart';
+import '../../core/ui/themes/font.dart';
 import 'product/product_card.dart';
 import 'search/search_delegate.dart';
 import 'shimmer/shimmer.dart';
@@ -180,10 +180,7 @@ class Appbar extends StatelessWidget {
       titleSpacing: 5,
       title: const Text(
         "Bekia",
-        style: TextStyle(
-          fontFamily: Font.bold,
-          fontSize: 24,
-        ),
+        style: TextStyle(fontFamily: Font.bold, fontSize: 24),
       ),
     );
   }
@@ -281,10 +278,10 @@ class SearchWidget extends StatelessWidget {
                     delegate: CustomSearchDelegate(
                       searchItems:
                           context.read<ProductCubit>().state is ProductsLoaded
-                              ? (context.read<ProductCubit>().state
-                                      as ProductsLoaded)
-                                  .products
-                              : [],
+                          ? (context.read<ProductCubit>().state
+                                    as ProductsLoaded)
+                                .products
+                          : [],
                     ),
                   );
                 },
@@ -300,9 +297,7 @@ class SearchWidget extends StatelessWidget {
                       SizedBox(width: 15),
                       Icon(Icons.search, size: 23),
                       SizedBox(width: 15),
-                      Text(
-                        'Search your product',
-                      ),
+                      Text('Search your product'),
                     ],
                   ),
                 ),
@@ -326,17 +321,6 @@ class SearchWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/product_model.dart';
+import '../../../core/models/product_model.dart';
 
 import '../home_widgets/product_list.dart';
 
@@ -13,20 +13,22 @@ class CustomSearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: const Icon(Icons.clear))
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      ),
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
     return (IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: const Icon(Icons.arrow_back)));
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: const Icon(Icons.arrow_back),
+    ));
   }
 
   @override
@@ -37,13 +39,7 @@ class CustomSearchDelegate extends SearchDelegate {
         matchQuery.add(product);
       }
     }
-    return CustomScrollView(
-      slivers: [
-        ProductList(
-          products: matchQuery,
-        ),
-      ],
-    );
+    return CustomScrollView(slivers: [ProductList(products: matchQuery)]);
   }
 
   @override
@@ -56,21 +52,11 @@ class CustomSearchDelegate extends SearchDelegate {
     }
 
     if (query.isEmpty) {
-      return const Center(
-        child: Text('Type to start searching...'),
-      );
+      return const Center(child: Text('Type to start searching...'));
     } else if (matchQuery.isEmpty) {
-      return const Center(
-        child: Text('No products found.'),
-      );
+      return const Center(child: Text('No products found.'));
     } else {
-      return CustomScrollView(
-        slivers: [
-          ProductList(
-            products: matchQuery,
-          )
-        ],
-      );
+      return CustomScrollView(slivers: [ProductList(products: matchQuery)]);
     }
   }
 }

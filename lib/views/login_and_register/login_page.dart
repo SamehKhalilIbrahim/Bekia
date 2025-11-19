@@ -1,8 +1,8 @@
 import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
 
-import '../../ui/animations/fade_animation.dart';
-import '../../ui/themes/app_color.dart';
+import '../../core/ui/animations/fade_animation.dart';
+import '../../core/ui/themes/app_color.dart';
 import '../home_screen/navigation.dart';
 import 'register_page.dart';
 import 'reset_password.dart';
