@@ -77,7 +77,9 @@ class ProductInfo extends StatelessWidget {
                             : context.height / 2,
                         width: context.width,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor.withOpacity(0.2),
+                          color: Theme.of(
+                            context,
+                          ).cardColor.withValues(alpha: 0.2),
                           borderRadius: const BorderRadius.vertical(
                             bottom: Radius.circular(20),
                           ),
@@ -212,9 +214,7 @@ class ProductInfo extends StatelessWidget {
                                 height: 27,
                                 width: 60,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(
-                                    context,
-                                  ).cardColor.withOpacity(0.2),
+                                  color: Theme.of(context).cardColor,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Row(

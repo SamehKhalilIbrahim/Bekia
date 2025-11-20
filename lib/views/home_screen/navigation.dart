@@ -59,36 +59,36 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                HomeScreen(scrollController: _scrollController),
-                WishlistScreen(scrollController: _scrollController),
-                CartScreen(scrollController: _scrollController),
-                const ProfileScreen(),
-              ],
-            ),
-            ValueListenableBuilder<bool>(
-              valueListenable: _showBottomNav,
-              builder: (context, show, child) {
-                return Positioned(
-                  bottom: 10,
-                  left: MediaQuery.of(context).size.width * 0.15,
-                  right: MediaQuery.of(context).size.width * 0.15,
+      body: Stack(
+        children: [
+          PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              HomeScreen(scrollController: _scrollController),
+              WishlistScreen(scrollController: _scrollController),
+              CartScreen(scrollController: _scrollController),
+              ProfileScreen(scrollController: _scrollController),
+            ],
+          ),
+          ValueListenableBuilder<bool>(
+            valueListenable: _showBottomNav,
+            builder: (context, show, child) {
+              return Positioned(
+                bottom: 10,
+                left: MediaQuery.of(context).size.width * 0.15,
+                right: MediaQuery.of(context).size.width * 0.15,
+                child: SafeArea(
                   child: AnimatedOpacity(
                     opacity: show ? 1 : 0,
                     duration: const Duration(milliseconds: 200),
                     child: bottomNavigationBar(context),
                   ),
-                );
-              },
-            ),
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

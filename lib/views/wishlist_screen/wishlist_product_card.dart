@@ -6,16 +6,16 @@ import '../../core/ui/themes/font.dart';
 import '../../services/constants.dart';
 import '../home_screen/shimmer/shimmer.dart';
 
-class FavouriteProductCard extends StatefulWidget {
+class FavoriteProductCard extends StatefulWidget {
   final Product product;
 
-  const FavouriteProductCard({super.key, required this.product});
+  const FavoriteProductCard({super.key, required this.product});
 
   @override
-  _FavouriteProductCardState createState() => _FavouriteProductCardState();
+  FavoriteProductCardState createState() => FavoriteProductCardState();
 }
 
-class _FavouriteProductCardState extends State<FavouriteProductCard> {
+class FavoriteProductCardState extends State<FavoriteProductCard> {
   final Box<Product> favoritesBox = Hive.box<Product>(
     HiveConstant.favoritesProductBox,
   );

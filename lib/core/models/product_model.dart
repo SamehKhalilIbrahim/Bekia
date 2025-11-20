@@ -5,16 +5,24 @@ part 'product_model.g.dart';
 class Product extends HiveObject {
   @HiveField(0)
   final int id;
+
   @HiveField(1)
   final String name;
+
   @HiveField(2)
   final String description;
+
   @HiveField(3)
   final List<String> imageUrl;
+
   @HiveField(4)
   final double price;
+
   @HiveField(5)
   final double rating;
+
+  @HiveField(6)
+  final String? thumbnail;
 
   Product({
     required this.id,
@@ -23,6 +31,7 @@ class Product extends HiveObject {
     required this.price,
     required this.description,
     required this.rating,
+    required this.thumbnail,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -30,16 +39,20 @@ class Product extends HiveObject {
       id: json['id'],
       name: json['title'] ?? 'No title',
       description: json['description'] ?? 'No description',
-      imageUrl: (json['images'] as List<dynamic>?)
+      imageUrl:
+          (json['images'] as List<dynamic>?)
               ?.map((image) => image.toString())
               .toList() ??
-          ['https://example.com/default-image.png'], // Default to a list
+          ['https://example.com/default-image.png'],
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      thumbnail:
+          json['thumbnail'] ??
+          json['images'][0] ??
+          'https://example.com/default-thumbnail.png',
     );
   }
 
-  // Method to create a copy of the Product object
   Product copyWith({
     int? id,
     String? name,
@@ -47,6 +60,7 @@ class Product extends HiveObject {
     List<String>? imageUrl,
     double? price,
     double? rating,
+    String? thumbnail,
   }) {
     return Product(
       id: id ?? this.id,
@@ -55,6 +69,7 @@ class Product extends HiveObject {
       imageUrl: imageUrl ?? this.imageUrl,
       price: price ?? this.price,
       rating: rating ?? this.rating,
+      thumbnail: thumbnail ?? this.thumbnail,
     );
   }
 }

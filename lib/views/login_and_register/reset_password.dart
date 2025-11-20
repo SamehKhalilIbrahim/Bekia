@@ -141,12 +141,12 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
                                   // Logic to send password reset link
-                                  print(
-                                    "Password reset link sent to ${emailController.text}",
-                                  );
+                                  // print(
+                                  //   "Password reset link sent to ${emailController.text}",
+                                  // );
                                   // Navigate to a confirmation screen or show a success message
                                 } else {
-                                  print("Not Valid");
+                                  // print("Not Valid");
                                 }
                               },
                               style: ElevatedButton.styleFrom(

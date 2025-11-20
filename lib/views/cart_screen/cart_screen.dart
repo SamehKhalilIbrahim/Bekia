@@ -28,37 +28,40 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: widget.scrollController,
-      physics: const BouncingScrollPhysics(
-        decelerationRate: ScrollDecelerationRate.fast,
-      ),
-      slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          sliver: cartProducts!.isEmpty
-              ? SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: context.height,
-                    child: const Center(
-                      child: Text("Don't have Products In Your Cart"),
-                    ),
-                  ),
-                )
-              : SliverGrid(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final product = cartProducts![index];
-                    return CartProductCard(product: product);
-                  }, childCount: cartProducts!.length),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisExtent: 120,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                  ),
-                ),
+    return SafeArea(
+      child: CustomScrollView(
+        controller: widget.scrollController,
+        physics: const BouncingScrollPhysics(
+          decelerationRate: ScrollDecelerationRate.fast,
         ),
-      ],
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            sliver: cartProducts!.isEmpty
+                ? SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: context.height,
+                      child: const Center(
+                        child: Text("Don't have Products In Your Cart"),
+                      ),
+                    ),
+                  )
+                : SliverGrid(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final product = cartProducts![index];
+                      return CartProductCard(product: product);
+                    }, childCount: cartProducts!.length),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          mainAxisExtent: 120,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                        ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

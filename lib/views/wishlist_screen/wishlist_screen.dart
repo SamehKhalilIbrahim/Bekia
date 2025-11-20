@@ -28,37 +28,40 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: widget.scrollController,
-      physics: const BouncingScrollPhysics(
-        decelerationRate: ScrollDecelerationRate.fast,
-      ),
-      slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          sliver: favProducts!.isEmpty
-              ? SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: context.height,
-                    child: const Center(
-                      child: Text("You Don't have Wishlist Products"),
-                    ),
-                  ),
-                )
-              : SliverGrid(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final product = favProducts![index];
-                    return FavouriteProductCard(product: product);
-                  }, childCount: favProducts!.length),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisExtent: 120,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                  ),
-                ),
+    return SafeArea(
+      child: CustomScrollView(
+        controller: widget.scrollController,
+        physics: const BouncingScrollPhysics(
+          decelerationRate: ScrollDecelerationRate.fast,
         ),
-      ],
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            sliver: favProducts!.isEmpty
+                ? SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: context.height,
+                      child: const Center(
+                        child: Text("You Don't have Wishlist Products"),
+                      ),
+                    ),
+                  )
+                : SliverGrid(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final product = favProducts![index];
+                      return FavoriteProductCard(product: product);
+                    }, childCount: favProducts!.length),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          mainAxisExtent: 120,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                        ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

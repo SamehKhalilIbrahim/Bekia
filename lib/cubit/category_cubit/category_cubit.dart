@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../services/constants.dart';
 import '../../services/remote/api_constrains.dart';
@@ -18,7 +18,8 @@ class CategoryCubit extends Cubit<CategoryState> {
     try {
       emit(CategoryLoading());
       final categories = await ProductServices().fetchCategoryList(
-        path: ApiConstant.baseUrl +
+        path:
+            ApiConstant.baseUrl +
             ApiConstant.productEndpoint +
             ApiConstant.categoryList,
       );
@@ -32,7 +33,11 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   void selectCategory(String category) {
     _selectedCategory = category;
-    emit(CategorySelected(
-        categories: _categories, selectedCategory: _selectedCategory));
+    emit(
+      CategorySelected(
+        categories: _categories,
+        selectedCategory: _selectedCategory,
+      ),
+    );
   }
 }

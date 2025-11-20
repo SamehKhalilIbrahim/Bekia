@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -8,13 +9,17 @@ import 'cubit/product_cubit/product_cubit_cubit.dart';
 import 'core/models/product_model.dart';
 import 'services/constants.dart';
 import 'core/ui/themes/app_theme.dart';
-import 'views/splash/splash_screen.dart';
+import 'views/home_screen/navigation.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   await Hive.openBox<Product>(HiveConstant.favoritesProductBox);
   await Hive.openBox<Product>(HiveConstant.cartProductBox);
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   runApp(const MainScreen());
 }
 
@@ -35,7 +40,7 @@ class MainScreen extends StatelessWidget {
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: ThemeMode.light,
-        home: const SplashScreen(),
+        home: NavigationScreen(),
       ),
     );
   }
@@ -46,6 +51,6 @@ extension SizeDevice on BuildContext {
   double get width => MediaQuery.of(this).size.width;
 }
 
-extension ColorSchemeExtension on BuildContext {
-  ColorScheme get colors => Theme.of(this).colorScheme;
+extension ThemeExtension on BuildContext {
+  ThemeData get colors => Theme.of(this);
 }

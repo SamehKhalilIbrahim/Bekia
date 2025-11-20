@@ -302,7 +302,7 @@ class RegisterPageState extends State<RegisterPage> {
                                     ),
                                   );
                                 } else {
-                                  print("Not Valid");
+                                  // print("Not Valid");
                                 }
                               },
                               style: ElevatedButton.styleFrom(

@@ -5,6 +5,6 @@ sealed class HiveState {}
 
 final class HiveInitial extends HiveState {}
 
-final class HiveChangeFavouriteState extends HiveState {}
+final class HiveChangeFavoriteState extends HiveState {}
 
 final class HiveChangeState extends HiveState {}
