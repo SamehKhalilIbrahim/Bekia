@@ -10,6 +10,9 @@ part 'product_cubit_state.dart';
 class ProductCubit extends Cubit<ProductCubitState> {
   ProductCubit() : super(ProductCubitInitial());
 
+  final int _selectedImageIndex = 0;
+  int get selectedImageIndex => _selectedImageIndex;
+
   void fetchProducts({required String category}) async {
     try {
       emit(ProductLoading());

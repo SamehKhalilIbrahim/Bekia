@@ -31,7 +31,9 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ProductCubit()),
+        BlocProvider(
+          create: (context) => ProductCubit()..fetchProducts(category: "All"),
+        ),
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => CategoryCubit()..fetchCategories()),
 

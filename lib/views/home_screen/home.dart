@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         decelerationRate: ScrollDecelerationRate.fast,
       ),
       slivers: [
-        const Appbar(),
+        const AppBar(),
         const SearchWidget(),
         Banner(),
         const CategoryList(),
@@ -35,8 +35,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Appbar extends StatelessWidget {
-  const Appbar({super.key});
+class AppBar extends StatelessWidget {
+  const AppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +212,6 @@ class CategoryList extends StatelessWidget {
         } else if (categoryState is CategoryLoaded) {
           categories = categoryState.categories;
           selectedCategory = context.read<CategoryCubit>().selectedCategory;
-          context.read<ProductCubit>().fetchProducts(
-            category: selectedCategory,
-          );
         } else if (categoryState is CategorySelected) {
           categories = categoryState.categories;
           selectedCategory = categoryState.selectedCategory;
@@ -288,6 +285,12 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductCubitState>(
+      buildWhen: (previous, current) {
+        return current is ProductLoading ||
+            current is ProductsLoaded ||
+            current is ProductError;
+      },
+
       builder: (context, state) {
         if (state is ProductLoading) {
           return SliverPadding(
@@ -318,7 +321,7 @@ class ProductGrid extends StatelessWidget {
           return ProductList(products: state.products);
         } else {
           return const SliverToBoxAdapter(
-            child: Center(child: Text('No products found')),
+            child: Center(child: Text('There was an error')),
           );
         }
       },

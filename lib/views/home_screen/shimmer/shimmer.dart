@@ -4,7 +4,14 @@ import 'package:shimmer/shimmer.dart';
 class ShimmerImage extends StatelessWidget {
   final double width;
   final double hight;
-  const ShimmerImage({super.key, required this.width, required this.hight});
+  final double borderRadius;
+
+  const ShimmerImage({
+    super.key,
+    required this.width,
+    required this.hight,
+    this.borderRadius = 20,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +22,9 @@ class ShimmerImage extends StatelessWidget {
         height: hight,
         width: width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Theme.of(context).scaffoldBackgroundColor),
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
       ),
     );
   }
@@ -36,10 +44,7 @@ class ShimmerProductCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            const ShimmerImage(
-              hight: 150,
-              width: 200,
-            ),
+            const ShimmerImage(hight: 150, width: 200),
             Positioned(
               top: 170,
               left: 10,
@@ -50,8 +55,9 @@ class ShimmerProductCard extends StatelessWidget {
                   height: 20,
                   width: 120,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(context).scaffoldBackgroundColor),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
                 ),
               ),
             ),
@@ -67,8 +73,9 @@ class ShimmerProductCard extends StatelessWidget {
                     height: 20,
                     width: 60,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).scaffoldBackgroundColor),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
                   ),
                 ),
               ),
@@ -99,7 +106,9 @@ class ShimmerCategoryCard extends StatelessWidget {
             height: 30,
             width: 60,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.white),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
           ),
         ),
       ),

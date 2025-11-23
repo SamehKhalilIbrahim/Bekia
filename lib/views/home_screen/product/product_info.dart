@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../../cubit/hive_cubit/hive_cubit.dart';
-import '../../../cubit/product_cubit/product_cubit_cubit.dart';
 import '../../../core/models/product_model.dart';
 import '../../../services/constants.dart';
 import '../../../core/ui/themes/font.dart';
@@ -18,10 +17,10 @@ class ProductInfo extends StatelessWidget {
   ProductInfo({super.key, required this.product});
 
   final Box<Product> cartBox = Hive.box<Product>(HiveConstant.cartProductBox);
+  final ValueNotifier<int> selectedImageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
-    int selectedImage = 0;
     List images = product.imageUrl;
 
     return Scaffold(
@@ -65,11 +64,13 @@ class ProductInfo extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  BlocBuilder<ProductCubit, ProductCubitState>(
-                    builder: (context, state) {
-                      if (state is ChangeSelectedImage) {
-                        selectedImage = state.selectedImage;
-                      }
+                  ValueListenableBuilder<int>(
+                    valueListenable: selectedImageNotifier,
+                    builder: (context, selectedImage, child) {
+                      // Ensure the selected image index is within bounds
+                      final safeSelectedImage = selectedImage < images.length
+                          ? selectedImage
+                          : 0;
 
                       return Container(
                         height: images.length == 1
@@ -95,7 +96,7 @@ class ProductInfo extends StatelessWidget {
                                   ),
                                   height: context.height / 2.6,
                                   child: CachedNetworkImage(
-                                    imageUrl: images[selectedImage],
+                                    imageUrl: images[safeSelectedImage],
                                     placeholder: (context, url) =>
                                         const ShimmerImage(
                                           hight: 150,
@@ -115,13 +116,10 @@ class ProductInfo extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: images.map((image) {
+                                  final index = images.indexOf(image);
                                   return GestureDetector(
                                     onTap: () {
-                                      context
-                                          .read<ProductCubit>()
-                                          .changeSelectedImage(
-                                            images.indexOf(image),
-                                          );
+                                      selectedImageNotifier.value = index;
                                     },
                                     child: Container(
                                       height: context.height / 13.5,
@@ -129,11 +127,10 @@ class ProductInfo extends StatelessWidget {
                                       margin: const EdgeInsets.symmetric(
                                         horizontal: 5,
                                       ),
-                                      decoration:
-                                          selectedImage == images.indexOf(image)
+                                      decoration: safeSelectedImage == index
                                           ? BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(10),
+                                                  BorderRadius.circular(12),
                                               border: Border.all(
                                                 width: 0.5,
                                                 color: Theme.of(
@@ -153,7 +150,7 @@ class ProductInfo extends StatelessWidget {
                                             )
                                           : BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(10),
+                                                  BorderRadius.circular(12),
                                               color: Colors.white,
                                             ),
                                       child: CachedNetworkImage(
@@ -162,6 +159,7 @@ class ProductInfo extends StatelessWidget {
                                             ShimmerImage(
                                               hight: context.height / 13.5,
                                               width: context.width / 6.5,
+                                              borderRadius: 12,
                                             ),
                                         filterQuality: FilterQuality.low,
                                         imageBuilder: (context, imageProvider) {

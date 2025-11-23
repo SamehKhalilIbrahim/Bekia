@@ -13,12 +13,6 @@ final class ChangeSelectedImage extends ProductCubitState {
 
 class ProductLoading extends ProductCubitState {}
 
-class ProductCategoriesLoaded extends ProductCubitState {
-  final List<String> categories;
-
-  ProductCategoriesLoaded({required this.categories});
-}
-
 class ProductsLoaded extends ProductCubitState {
   final List<Product> products;
 
