@@ -85,7 +85,7 @@ class ProductCard extends StatelessWidget {
 
               return IconButton(
                 onPressed: () {
-                  context.read<HiveCubit>().changeFavouriteState(product);
+                  context.read<HiveCubit>().changeFavoriteState(product);
                 },
                 icon: Icon(
                   isFavorite

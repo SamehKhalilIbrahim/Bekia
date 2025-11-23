@@ -1,3 +1,4 @@
+import 'package:bekia/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -6,16 +7,15 @@ import '../../core/ui/themes/font.dart';
 import '../../services/constants.dart';
 import '../home_screen/shimmer/shimmer.dart';
 
-class FavoriteProductCard extends StatefulWidget {
+class FavoriteProductCard extends StatelessWidget {
   final Product product;
+  final VoidCallback onDelete;
 
-  const FavoriteProductCard({super.key, required this.product});
-
-  @override
-  FavoriteProductCardState createState() => FavoriteProductCardState();
-}
-
-class FavoriteProductCardState extends State<FavoriteProductCard> {
+  FavoriteProductCard({
+    super.key,
+    required this.product,
+    required this.onDelete,
+  });
   final Box<Product> favoritesBox = Hive.box<Product>(
     HiveConstant.favoritesProductBox,
   );
@@ -23,9 +23,6 @@ class FavoriteProductCardState extends State<FavoriteProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Check if the product is in the cart
-    bool isInCart = cartBox.containsKey(widget.product.id);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -36,14 +33,14 @@ class FavoriteProductCardState extends State<FavoriteProductCard> {
           Padding(
             padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
             child: CachedNetworkImage(
-              imageUrl: widget.product.imageUrl[0],
+              imageUrl: product.imageUrl[0],
               placeholder: (context, url) =>
                   const ShimmerImage(hight: 110, width: 140),
               filterQuality: FilterQuality.low,
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageBuilder: (context, imageProvider) {
                 return Hero(
-                  tag: 'product_${widget.product.id}',
+                  tag: 'product_${product.id}',
                   transitionOnUserGestures: true,
                   child: Container(
                     height: 110,
@@ -67,7 +64,7 @@ class FavoriteProductCardState extends State<FavoriteProductCard> {
             left: 155,
             right: 40,
             child: Text(
-              widget.product.name,
+              product.name,
               maxLines: 2,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
@@ -83,7 +80,7 @@ class FavoriteProductCardState extends State<FavoriteProductCard> {
             left: 155,
             right: 10,
             child: Text(
-              '\$${widget.product.price}',
+              '\$${product.price}',
               style: const TextStyle(
                 fontFamily: Font.semiBold,
                 fontSize: 16,
@@ -95,51 +92,52 @@ class FavoriteProductCardState extends State<FavoriteProductCard> {
             top: 0,
             right: 0,
             child: IconButton(
-              onPressed: () {
-                setState(() {
-                  favoritesBox.delete(widget.product.id);
-                });
-              },
+              onPressed: onDelete,
               icon: Icon(
                 Icons.close_rounded,
                 color: Theme.of(context).primaryColorLight,
               ),
             ),
           ),
-          Positioned(
-            bottom: 15,
-            right: 0,
-            child: SizedBox(
-              width: 110,
-              height: 35,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (isInCart) {
-                      cartBox.delete(widget.product.id);
-                    } else {
-                      cartBox.put(widget.product.id, widget.product.copyWith());
-                    }
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColorLight,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+          ValueListenableBuilder(
+            valueListenable: cartBox.listenable(),
+            builder: (context, Box<Product> box, _) {
+              bool isInCart = box.containsKey(product.id);
+
+              return Positioned(
+                bottom: 15,
+                right: 0,
+                child: SizedBox(
+                  width: 132,
+                  height: 35,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (isInCart) {
+                        cartBox.delete(product.id);
+                      } else {
+                        cartBox.put(product.id, product.copyWith());
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isInCart
+                          ? context.colors.cardColor
+                          : Theme.of(context).primaryColorLight,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      isInCart ? "Remove from Cart" : "Add to Cart",
+                      style: TextStyle(
+                        color: context.colors.primaryColor,
+                        fontSize: isInCart ? 10 : 12,
+                        fontFamily: Font.semiBold,
+                      ),
+                    ),
                   ),
                 ),
-                child: Text(
-                  isInCart
-                      ? "Remove from Cart"
-                      : "Add to Cart", // Update text dynamically
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: Font.semiBold,
-                  ),
-                ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),

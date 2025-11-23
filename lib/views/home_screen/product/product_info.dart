@@ -16,7 +16,6 @@ class ProductInfo extends StatelessWidget {
   final Product product;
   ProductInfo({super.key, required this.product});
 
-  final Box<Product> cartBox = Hive.box<Product>(HiveConstant.cartProductBox);
   final ValueNotifier<int> selectedImageNotifier = ValueNotifier<int>(0);
 
   @override
@@ -36,7 +35,7 @@ class ProductInfo extends StatelessWidget {
 
               return IconButton(
                 onPressed: () {
-                  context.read<HiveCubit>().changeFavouriteState(product);
+                  context.read<HiveCubit>().changeFavoriteState(product);
                 },
                 icon: Icon(
                   isFavorite
@@ -67,7 +66,6 @@ class ProductInfo extends StatelessWidget {
                   ValueListenableBuilder<int>(
                     valueListenable: selectedImageNotifier,
                     builder: (context, selectedImage, child) {
-                      // Ensure the selected image index is within bounds
                       final safeSelectedImage = selectedImage < images.length
                           ? selectedImage
                           : 0;
@@ -267,7 +265,7 @@ class ProductInfo extends StatelessWidget {
     );
   }
 
-  Positioned bottomBar(BuildContext context) {
+  Widget bottomBar(BuildContext context) {
     return Positioned(
       bottom: 5,
       left: 5,
@@ -304,56 +302,181 @@ class ProductInfo extends StatelessWidget {
               ),
               child: SizedBox(
                 height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                child: BlocBuilder<HiveCubit, HiveState>(
+                  builder: (context, state) {
+                    final cubit = context.read<HiveCubit>();
+                    final isInCart = cubit.isProductInCart(product.id);
+                    final quantity = cubit.getProductQuantity(product.id);
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Price:",
-                          style: TextStyle(fontFamily: Font.bold, fontSize: 13),
+                        // Price Column
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Price:",
+                              style: TextStyle(
+                                fontFamily: Font.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              "\$${product.price.toString()}",
+                              style: TextStyle(
+                                fontFamily: Font.semiBold,
+                                fontSize: 20,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "\$${product.price.toString()}",
-                          style: TextStyle(
-                            fontFamily: Font.semiBold,
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                        ),
+
+                        // Add to Cart or Quantity Controls
+                        isInCart
+                            ? _buildQuantityControls(context, cubit, quantity)
+                            : _buildAddToCartButton(context, cubit),
                       ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (true) {
-                          cartBox.put(product.id, product);
-                        } else {
-                          cartBox.delete(product.id);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColorLight,
-                        minimumSize: Size(context.width * 0.5, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      child: const Text(
-                        'Add To Cart',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // Add to Cart Button (when product is not in cart)
+  Widget _buildAddToCartButton(BuildContext context, HiveCubit cubit) {
+    return ElevatedButton(
+      onPressed: () {
+        cubit.addToCart(product);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${product.name} added to cart'),
+            duration: const Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Theme.of(context).primaryColorLight,
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).primaryColorLight,
+        minimumSize: Size(context.width * 0.5, 50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+      child: const Text(
+        'Add To Cart',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // Quantity Controls (when product is already in cart)
+  // Quantity Controls (when product is already in cart)
+  Widget _buildQuantityControls(
+    BuildContext context,
+    HiveCubit cubit,
+    int quantity,
+  ) {
+    return Container(
+      width: context.width * 0.47, // Reduced from 0.5 to 0.48
+      height: 50,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Theme.of(context).primaryColorLight.withOpacity(0.3),
+          width: 1.5,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Decrease Button
+          SizedBox(
+            width: 40,
+            child: IconButton(
+              onPressed: () {
+                cubit.decreaseQuantity(product);
+                if (quantity == 1) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${product.name} removed from cart'),
+                      duration: const Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                }
+              },
+              icon: Icon(
+                quantity > 1 ? Icons.remove : Icons.delete_outline,
+                color: quantity > 1
+                    ? Theme.of(context).primaryColorLight
+                    : Colors.red[400],
+                size: 22,
+              ),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+            ),
+          ),
+
+          // Quantity Display
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColorLight.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  quantity.toString(),
+                  style: TextStyle(
+                    fontFamily: Font.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                Text(
+                  'in cart',
+                  style: TextStyle(
+                    fontFamily: Font.bold,
+                    fontSize: 14,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Increase Button
+          SizedBox(
+            width: 40,
+            child: IconButton(
+              onPressed: () {
+                cubit.increaseQuantity(product);
+              },
+              icon: Icon(
+                Icons.add,
+                color: Theme.of(context).primaryColorLight,
+                size: 22,
+              ),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+            ),
+          ),
+        ],
       ),
     );
   }

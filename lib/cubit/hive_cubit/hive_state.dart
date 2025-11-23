@@ -7,4 +7,4 @@ final class HiveInitial extends HiveState {}
 
 final class HiveChangeFavoriteState extends HiveState {}
 
-final class HiveChangeState extends HiveState {}
+final class HiveChangeCartState extends HiveState {}

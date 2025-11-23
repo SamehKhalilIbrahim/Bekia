@@ -15,12 +15,14 @@ import 'views/home_screen/navigation.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
+
   await Hive.openBox<Product>(HiveConstant.favoritesProductBox);
   await Hive.openBox<Product>(HiveConstant.cartProductBox);
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
+
   runApp(const MainScreen());
 }
 

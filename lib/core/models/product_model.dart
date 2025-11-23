@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 part 'product_model.g.dart';
 
 @HiveType(typeId: 0)
-class Product extends HiveObject {
+class Product {
   @HiveField(0)
   final int id;
 
@@ -24,6 +24,9 @@ class Product extends HiveObject {
   @HiveField(6)
   final String? thumbnail;
 
+  @HiveField(7)
+  final int quantity; // Add quantity field
+
   Product({
     required this.id,
     required this.name,
@@ -32,6 +35,7 @@ class Product extends HiveObject {
     required this.description,
     required this.rating,
     required this.thumbnail,
+    this.quantity = 1, // Default quantity is 1
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -48,8 +52,9 @@ class Product extends HiveObject {
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       thumbnail:
           json['thumbnail'] ??
-          json['images'][0] ??
+          json['images']?[0] ??
           'https://example.com/default-thumbnail.png',
+      quantity: json['quantity'] ?? 1,
     );
   }
 
@@ -61,6 +66,7 @@ class Product extends HiveObject {
     double? price,
     double? rating,
     String? thumbnail,
+    int? quantity,
   }) {
     return Product(
       id: id ?? this.id,
@@ -70,6 +76,7 @@ class Product extends HiveObject {
       price: price ?? this.price,
       rating: rating ?? this.rating,
       thumbnail: thumbnail ?? this.thumbnail,
+      quantity: quantity ?? this.quantity,
     );
   }
 }

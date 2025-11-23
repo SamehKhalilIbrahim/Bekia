@@ -79,10 +79,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 left: MediaQuery.of(context).size.width * 0.15,
                 right: MediaQuery.of(context).size.width * 0.15,
                 child: SafeArea(
-                  child: AnimatedOpacity(
-                    opacity: show ? 1 : 0,
-                    duration: const Duration(milliseconds: 200),
-                    child: bottomNavigationBar(context),
+                  child: IgnorePointer(
+                    ignoring: !show,
+                    child: AnimatedOpacity(
+                      opacity: show ? 1 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: bottomNavigationBar(context),
+                    ),
                   ),
                 ),
               );
