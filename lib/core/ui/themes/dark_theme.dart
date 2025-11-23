@@ -10,6 +10,7 @@ ThemeData darkTheme = ThemeData(
   hintColor: AppColor.textColorDark,
   primaryColorLight: AppColor.buttonBackgroundColorDark,
   cardColor: AppColor.externalColorDark,
+  iconTheme: IconThemeData(color: Colors.white),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(
       color: Colors.white,
