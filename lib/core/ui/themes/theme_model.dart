@@ -1,26 +1,43 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'theme_preference.dart';
 
-class ThemeModel extends ChangeNotifier {
-  bool _isDark = false;
-  late ThemePreferences _preferences;
-  bool get isDark => _isDark;
+// State
+class ThemeState {
+  final bool isDark;
 
-  ThemeModel() {
-    _isDark = false;
-    _preferences = ThemePreferences();
-    getPreferences();
+  const ThemeState({required this.isDark});
+
+  ThemeState copyWith({bool? isDark}) {
+    return ThemeState(isDark: isDark ?? this.isDark);
+  }
+}
+
+// Cubit
+class ThemeCubit extends Cubit<ThemeState> {
+  final ThemePreferences _preferences;
+
+  ThemeCubit()
+    : _preferences = ThemePreferences(),
+      super(const ThemeState(isDark: false)) {
+    _loadTheme();
   }
 
-  set isDark(bool value) {
-    _isDark = value;
-    _preferences.setTheme(value);
-    notifyListeners();
+  // Load theme from preferences
+  Future<void> _loadTheme() async {
+    final isDark = await _preferences.getTheme();
+    emit(ThemeState(isDark: isDark));
   }
 
-  getPreferences() async {
-    _isDark = await _preferences.getTheme();
-    notifyListeners();
+  // Toggle theme
+  void toggleTheme() {
+    final newValue = !state.isDark;
+    _preferences.setTheme(newValue);
+    emit(ThemeState(isDark: newValue));
+  }
+
+  // Set theme directly
+  void setTheme(bool isDark) {
+    _preferences.setTheme(isDark);
+    emit(ThemeState(isDark: isDark));
   }
 }

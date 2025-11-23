@@ -47,4 +47,29 @@ ThemeData lightTheme = ThemeData(
     textTheme: ButtonTextTheme.primary,
     buttonColor: AppColor.buttonBackgroundColor,
   ),
+  switchTheme: SwitchThemeData(
+    thumbColor: WidgetStateProperty.resolveWith<Color>((
+      Set<WidgetState> states,
+    ) {
+      if (states.contains(WidgetState.selected)) {
+        return Colors.white; // White thumb when ON
+      }
+      return Colors.grey[700]!; // Light grey thumb when OFF
+    }),
+    trackColor: WidgetStateProperty.resolveWith<Color>((
+      Set<WidgetState> states,
+    ) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColor.buttonBackgroundColor.withValues(
+          alpha: 0.8,
+        ); // Red track when ON
+      }
+      return AppColor.bodyPrimaryColor; // Light grey track when OFF
+    }),
+    trackOutlineColor: WidgetStateProperty.resolveWith<Color>((
+      Set<WidgetState> states,
+    ) {
+      return Colors.grey[700]!; // No outline
+    }),
+  ),
 );

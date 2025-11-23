@@ -3,7 +3,10 @@ import 'package:bekia/main.dart';
 import 'package:bekia/views/profile_screen/profile_setting_screen/profile_setting_screen.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/ui/themes/theme_model.dart';
+import 'change_pass_screen/change_password_screen.dart';
 import 'widgets/circler_profile_image.dart';
 import 'widgets/profile_tile.dart';
 
@@ -149,24 +152,48 @@ class _ProfileScreenState extends State<ProfileScreen>
                         size: 22,
                       ),
                       title: "Change Password",
-                      onTap: () {},
-                    ),
-                    ProfileTile(
-                      icon: Icon(FluentIcons.weather_moon_20_regular, size: 22),
-                      title: "Dark Mode",
-                      onTap: () {},
-                      virticalPadding: 8,
-                      suffixWidget: SizedBox(
-                        height: 42,
-                        child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: Switch(
-                            value: true,
-                            onChanged: (value) {},
-                            activeThumbColor: context.colors.primaryColorLight,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ChangePasswordScreen();
+                            },
                           ),
-                        ),
-                      ),
+                        );
+                      },
+                    ),
+                    BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (context, state) {
+                        return ProfileTile(
+                          icon: Icon(
+                            state.isDark
+                                ? FluentIcons.weather_sunny_20_regular
+                                : FluentIcons.weather_moon_20_regular,
+                            size: 22,
+                          ),
+                          title: "Dark Mode",
+                          onTap: () {
+                            // Optional: toggle on tile tap
+                            context.read<ThemeCubit>().toggleTheme();
+                          },
+                          virticalPadding: 8,
+                          suffixWidget: SizedBox(
+                            height: 42,
+                            child: FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Switch(
+                                value: state.isDark,
+                                onChanged: (value) {
+                                  context.read<ThemeCubit>().setTheme(value);
+                                },
+                                activeThumbColor:
+                                    context.colors.primaryColorLight,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Divider(
                       color: context.colors.textTheme.bodyMedium?.color

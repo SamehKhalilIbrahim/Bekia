@@ -3,6 +3,8 @@ import 'package:bekia/views/profile_screen/widgets/circler_profile_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/custom_profile_text_field.dart';
+
 class ProfileSettingScreen extends StatefulWidget {
   const ProfileSettingScreen({super.key});
 
@@ -11,6 +13,8 @@ class ProfileSettingScreen extends StatefulWidget {
 }
 
 class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   late TextEditingController _nameController;
   late TextEditingController _emailController;
 
@@ -38,15 +42,14 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
               ),
             ),
+
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  // Profile Image with Edit Button
+                  // Profile Image
                   SizedBox(
                     width: 140,
                     child: Stack(
@@ -57,9 +60,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           bottom: 0,
                           right: 0,
                           child: InkWell(
-                            onTap: () {
-                              // Edit profile image logic
-                            },
+                            onTap: () {},
                             child: Container(
                               width: 32,
                               height: 32,
@@ -83,116 +84,77 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
 
-                  // Name
-                  Text(
-                    'Sameh Khalil',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: context.colors.textTheme.bodyMedium!.color!,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-
-                  // Email
-                  Text(
-                    'sameh.eldeqwy@gmail.com',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: context.colors.textTheme.bodyMedium!.color!,
-                    ),
-                  ),
                   const SizedBox(height: 32),
 
-                  // Form Fields
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      children: [
-                        // User Name Field
-                        Container(
-                          decoration: BoxDecoration(
-                            color: context.colors.cardColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextField(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        spacing: 16,
+                        children: [
+                          CustomProfileFormField(
                             controller: _nameController,
-                            decoration: InputDecoration(
-                              hintText: 'User Name',
-                              hintStyle: TextStyle(
-                                color:
-                                    context.colors.textTheme.bodyMedium!.color!,
-                              ),
-                              prefixIcon: Icon(
-                                FluentIcons.person_24_regular,
-                                color:
-                                    context.colors.textTheme.bodyMedium!.color!,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Email Field
-                        Container(
-                          decoration: BoxDecoration(
-                            color: context.colors.cardColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              hintText: 'email',
-                              hintStyle: TextStyle(
-                                color:
-                                    context.colors.textTheme.bodyMedium!.color!,
-                              ),
-                              prefixIcon: Icon(
-                                FluentIcons.mail_48_regular,
-                                color:
-                                    context.colors.textTheme.bodyMedium!.color!,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Save Changes Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 54,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Save changes logic
+                            hintText: "User Name",
+                            prefixIcon: FluentIcons.person_24_regular,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Name cannot be empty";
+                              }
+                              return null;
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: context.colors.primaryColorLight,
-                              foregroundColor: context.colors.primaryColor,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                          ),
+
+                          CustomProfileFormField(
+                            controller: _emailController,
+                            hintText: "Email",
+                            prefixIcon: FluentIcons.mail_48_regular,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Email cannot be empty";
+                              }
+                              if (!value.contains("@")) {
+                                return "Enter a valid email";
+                              }
+                              return null;
+                            },
+                          ),
+
+                          // SAVE BUTTON
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 54,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // 🔥 VALIDATE FORMS HERE
+                                  if (_formKey.currentState!.validate()) {
+                                    // Save changes logic
+                                  } else {
+                                    // Show error messages
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      context.colors.primaryColorLight,
+                                  foregroundColor: context.colors.primaryColor,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Save Changes',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                               ),
                             ),
-                            child: const Text(
-                              'Save Changes',
-                              style: TextStyle(fontSize: 16),
-                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

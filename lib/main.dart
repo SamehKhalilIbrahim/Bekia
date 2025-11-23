@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'core/ui/themes/theme_model.dart';
 import 'cubit/category_cubit/category_cubit.dart';
 import 'cubit/hive_cubit/hive_cubit.dart';
 import 'cubit/product_cubit/product_cubit_cubit.dart';
@@ -31,16 +32,19 @@ class MainScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ProductCubit()),
+        BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => CategoryCubit()..fetchCategories()),
 
         BlocProvider(create: (context) => HiveCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.light,
-        home: NavigationScreen(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: state.isDark ? ThemeMode.dark : ThemeMode.light,
+          home: NavigationScreen(),
+        ),
       ),
     );
   }
