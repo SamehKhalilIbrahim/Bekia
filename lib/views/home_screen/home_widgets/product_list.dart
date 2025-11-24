@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/models/product_model.dart';
+import '../../../core/ui/animations/screen_transictions_animation.dart';
 import '../product/product_card.dart';
 import '../product/product_info.dart';
 
@@ -17,11 +18,9 @@ class ProductList extends StatelessWidget {
           final product = products[index];
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductInfo(product: product),
-                ),
-              );
+              Navigator.of(
+                context,
+              ).push(FadePageRoute(page: ProductInfo(product: product)));
             },
             child: ProductCard(product: product),
           );

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/ui/animations/screen_transictions_animation.dart';
 import '../../core/widgets/dot_slide.dart';
 import '../login_and_register/login_page.dart';
 import 'on_boarding_page.dart';
@@ -80,7 +81,7 @@ class OnboardingPageState extends State<OnboardingPage> {
         if (currentIndex == onboardingData.length - 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
+            SmoothSlideRoute(page: LoginPage()),
           );
         } else {
           _controller.nextPage(

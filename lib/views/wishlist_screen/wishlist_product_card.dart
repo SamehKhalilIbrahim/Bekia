@@ -129,7 +129,7 @@ class FavoriteProductCard extends StatelessWidget {
                     child: Text(
                       isInCart ? "Remove from Cart" : "Add to Cart",
                       style: TextStyle(
-                        color: context.colors.primaryColor,
+                        color: context.colors.textTheme.headlineLarge!.color,
                         fontSize: isInCart ? 10 : 12,
                         fontFamily: Font.semiBold,
                       ),

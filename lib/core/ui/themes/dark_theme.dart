@@ -44,7 +44,8 @@ ThemeData darkTheme = ThemeData(
     ),
   ),
   buttonTheme: ButtonThemeData(
-    textTheme: ButtonTextTheme.primary,
+    textTheme: ButtonTextTheme.normal,
+
     buttonColor: AppColor.buttonBackgroundColorDark,
   ),
 );

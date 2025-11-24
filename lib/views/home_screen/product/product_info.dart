@@ -4,11 +4,9 @@ import 'package:bekia/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import '../../../cubit/hive_cubit/hive_cubit.dart';
 import '../../../core/models/product_model.dart';
-import '../../../services/constants.dart';
 import '../../../core/ui/themes/font.dart';
 import '../shimmer/shimmer.dart';
 
@@ -25,7 +23,7 @@ class ProductInfo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Theme.of(context).cardColor.withOpacity(0.2),
+        backgroundColor: Theme.of(context).cardColor,
         actions: [
           BlocBuilder<HiveCubit, HiveState>(
             builder: (context, state) {
@@ -76,9 +74,7 @@ class ProductInfo extends StatelessWidget {
                             : context.height / 2,
                         width: context.width,
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).cardColor.withValues(alpha: 0.2),
+                          color: Theme.of(context).cardColor,
                           borderRadius: const BorderRadius.vertical(
                             bottom: Radius.circular(20),
                           ),
@@ -325,7 +321,7 @@ class ProductInfo extends StatelessWidget {
                             Text(
                               "\$${product.price.toString()}",
                               style: TextStyle(
-                                fontFamily: Font.semiBold,
+                                fontFamily: Font.bold,
                                 fontSize: 20,
                                 color: Theme.of(context).primaryColorLight,
                               ),

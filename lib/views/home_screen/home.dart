@@ -1,3 +1,4 @@
+import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -80,7 +81,7 @@ class SearchWidget extends StatelessWidget {
                   height: 35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: AppColor.externalColor,
+                    color: context.colors.cardColor,
                   ),
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,7 +102,7 @@ class SearchWidget extends StatelessWidget {
                 height: 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: AppColor.externalColor,
+                  color: context.colors.cardColor,
                 ),
                 child: const Icon(Icons.filter_alt, size: 25),
               ),

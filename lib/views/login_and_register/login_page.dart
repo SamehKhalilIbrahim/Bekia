@@ -2,6 +2,7 @@ import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/ui/animations/fade_animation.dart';
+import '../../core/ui/animations/screen_transictions_animation.dart';
 import '../../core/ui/themes/app_color.dart';
 import '../home_screen/navigation.dart';
 import 'register_page.dart';
@@ -211,10 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PasswordRecoveryPage(),
-                                ),
+                                SmoothSlideRoute(page: PasswordRecoveryPage()),
                               );
                             },
                             child: const Text("Forget Password?"),
@@ -232,10 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                                 if (formkey.currentState!.validate()) {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const NavigationScreen(),
-                                    ),
+                                    FadePageRoute(page: NavigationScreen()),
                                   );
                                 } else {
                                   // print("Not Valid");
@@ -291,10 +286,7 @@ class _LoginPageState extends State<LoginPage> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterPage(),
-                                    ),
+                                    SmoothSlideRoute(page: RegisterPage()),
                                   );
                                 },
                                 child: Text(

@@ -1,3 +1,4 @@
+import 'package:bekia/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,8 +47,10 @@ class MainScreen extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
-          themeMode: state.isDark ? ThemeMode.dark : ThemeMode.light,
-          home: NavigationScreen(),
+          themeMode: ThemeMode.dark,
+
+          //  state.isDark ? ThemeMode.dark : ThemeMode.light,
+          home: SplashScreen(),
         ),
       ),
     );

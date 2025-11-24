@@ -5,6 +5,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/ui/animations/screen_transictions_animation.dart';
 import '../../core/ui/themes/theme_model.dart';
 import 'change_pass_screen/change_password_screen.dart';
 import 'widgets/circler_profile_image.dart';
@@ -138,11 +139,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProfileSettingScreen();
-                            },
-                          ),
+
+                          ScalePageRoute(page: ProfileSettingScreen()),
                         );
                       },
                     ),
@@ -155,11 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ChangePasswordScreen();
-                            },
-                          ),
+                          SmoothSlideRoute(page: ChangePasswordScreen()),
                         );
                       },
                     ),

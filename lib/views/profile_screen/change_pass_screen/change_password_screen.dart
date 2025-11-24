@@ -109,7 +109,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           child: Icon(
                             FluentIcons.lock_closed_key_20_regular,
                             size: 48,
-                            color: context.colors.primaryColor,
+                            color: context.colors.primaryColorLight,
                           ),
                         ),
                       ),
@@ -235,7 +235,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     context.colors.primaryColorLight,
-                                foregroundColor: context.colors.primaryColor,
+                                foregroundColor: context
+                                    .colors
+                                    .textTheme
+                                    .headlineLarge!
+                                    .color,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18),
