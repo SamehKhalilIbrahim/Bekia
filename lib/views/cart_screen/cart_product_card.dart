@@ -3,7 +3,7 @@ import 'package:bekia/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/models/product_model.dart';
+import '../../core/models/product_model/product_model.dart';
 import '../../core/ui/themes/font.dart';
 import '../home_screen/shimmer/shimmer.dart';
 

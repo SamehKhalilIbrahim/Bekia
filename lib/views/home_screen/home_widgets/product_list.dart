@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/models/product_model.dart';
+import '../../../core/models/product_model/product_model.dart';
 import '../../../core/ui/animations/screen_transictions_animation.dart';
 import '../product/product_card.dart';
 import '../product/product_info.dart';

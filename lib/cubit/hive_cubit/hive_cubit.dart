@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../core/models/product_model.dart';
+import '../../core/models/product_model/product_model.dart';
 import '../../services/constants.dart';
 
 part 'hive_state.dart';

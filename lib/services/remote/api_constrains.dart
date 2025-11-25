@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../core/models/product_model.dart';
+import '../../core/models/product_model/product_model.dart';
 
 class ProductServices {
   Dio dio = Dio();

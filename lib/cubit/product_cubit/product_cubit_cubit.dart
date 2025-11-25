@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/models/product_model.dart';
+import '../../core/models/product_model/product_model.dart';
 import '../../services/constants.dart';
 import '../../services/remote/api_constrains.dart';
 

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/hive_cubit/hive_cubit.dart';
-import '../../../core/models/product_model.dart';
+import '../../../core/models/product_model/product_model.dart';
 import '../../../core/ui/themes/font.dart';
 import '../shimmer/shimmer.dart';
 

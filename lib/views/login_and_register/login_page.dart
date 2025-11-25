@@ -40,8 +40,7 @@ class _LoginPageState extends State<LoginPage> {
               begin: Alignment.topCenter,
               colors: [
                 Theme.of(context).primaryColorLight,
-                AppColor.bodySecondaryColor,
-                AppColor.bodyPrimaryColor,
+                Theme.of(context).scaffoldBackgroundColor,
               ],
             ),
           ),
@@ -91,15 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.all(20),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).secondaryHeaderColor,
+                                color: Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(15),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromARGB(142, 245, 102, 59),
-                                    blurRadius: 20,
-                                    offset: Offset(0, 10),
-                                  ),
-                                ],
                               ),
                               child: Column(
                                 children: [

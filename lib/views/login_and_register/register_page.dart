@@ -88,15 +88,8 @@ class RegisterPageState extends State<RegisterPage> {
                             padding: const EdgeInsets.all(20),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).secondaryHeaderColor,
+                                color: Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(15),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromARGB(142, 245, 102, 59),
-                                    blurRadius: 20,
-                                    offset: Offset(0, 10),
-                                  ),
-                                ],
                               ),
                               child: Column(
                                 children: [

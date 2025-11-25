@@ -1,3 +1,6 @@
+import 'package:bekia/cubit/auth_cubit/auth_bloc.dart';
+import 'package:bekia/cubit/auth_cubit/auth_event.dart';
+import 'package:bekia/services/remote/auth_services.dart';
 import 'package:bekia/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,12 +11,14 @@ import 'core/ui/themes/theme_model.dart';
 import 'cubit/category_cubit/category_cubit.dart';
 import 'cubit/hive_cubit/hive_cubit.dart';
 import 'cubit/product_cubit/product_cubit_cubit.dart';
-import 'core/models/product_model.dart';
+import 'core/models/product_model/product_model.dart';
 import 'services/constants.dart';
 import 'core/ui/themes/app_theme.dart';
+import 'services/remote/supabase_config.dart';
 import 'views/home_screen/navigation.dart';
 
 void main() async {
+  await SupabaseConfig.initialize();
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
 
@@ -35,6 +40,11 @@ class MainScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) =>
+              AuthBloc(authService: AuthService())..add(LoadCurrentUser()),
+        ),
+
+        BlocProvider(
           create: (context) => ProductCubit()..fetchProducts(category: "All"),
         ),
         BlocProvider(create: (context) => ThemeCubit()),
@@ -47,9 +57,7 @@ class MainScreen extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
-          themeMode: ThemeMode.dark,
-
-          //  state.isDark ? ThemeMode.dark : ThemeMode.light,
+          themeMode: state.isDark ? ThemeMode.dark : ThemeMode.light,
           home: SplashScreen(),
         ),
       ),
