@@ -5,7 +5,6 @@ import 'dart:io';
 abstract class AuthEvent {
   const AuthEvent();
 
-  @override
   List<Object?> get props => [];
 }
 

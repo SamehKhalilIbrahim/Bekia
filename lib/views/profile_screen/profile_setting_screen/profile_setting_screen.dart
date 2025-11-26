@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:bekia/main.dart';
 import 'package:bekia/views/profile_screen/widgets/circler_profile_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -220,12 +221,29 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
               // Background
               Positioned.fill(
                 child: Stack(
+                  alignment: Alignment.topCenter,
                   children: [
                     _selectedImage != null
-                        ? Image.file(_selectedImage!, fit: BoxFit.cover)
-                        : Image.asset(
-                            "assets/images/profile.jpg",
-                            fit: BoxFit.cover,
+                        ? Image.file(
+                            _selectedImage!,
+                            fit: BoxFit.fitWidth,
+                            height: context.height * 0.4,
+                            width: context.width,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: _currentImageUrl ?? '',
+                            fit: BoxFit.fitWidth,
+                            height: context.height * 0.4,
+                            width: context.width,
+                            errorWidget: (context, url, error) => Icon(
+                              FluentIcons.person_48_regular,
+                              size: 80,
+                              color: context
+                                  .colors
+                                  .textTheme
+                                  .headlineLarge!
+                                  .color!,
+                            ),
                           ),
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
@@ -271,7 +289,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
                   ),
 
                   // Main Content
-                  SliverToBoxAdapter(
+                  SliverFillRemaining(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(

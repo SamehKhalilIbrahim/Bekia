@@ -7,10 +7,10 @@ class FadeAnimation extends StatefulWidget {
   const FadeAnimation({required this.delay, required this.child, super.key});
 
   @override
-  _FadeAnimationState createState() => _FadeAnimationState();
+  FadeAnimationState createState() => FadeAnimationState();
 }
 
-class _FadeAnimationState extends State<FadeAnimation>
+class FadeAnimationState extends State<FadeAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -22,12 +22,10 @@ class _FadeAnimationState extends State<FadeAnimation>
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOut,
-      ),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     Future.delayed(Duration(milliseconds: (widget.delay * 1000).round()), () {
       if (mounted) {
@@ -44,9 +42,6 @@ class _FadeAnimationState extends State<FadeAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: _animation, child: widget.child);
   }
 }

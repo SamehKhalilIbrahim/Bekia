@@ -9,7 +9,6 @@ class CirclerProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(image);
     return Container(
       width: 124,
       height: 124,
@@ -22,24 +21,28 @@ class CirclerProfileImage extends StatelessWidget {
                 width: 5,
               )
             : null,
-        image: image == null
-            ? DecorationImage(
-                image: AssetImage("assets/images/profile.jpg"),
-                fit: BoxFit.cover,
-              )
-            : null,
       ),
-      child: image != null
-          ? CachedNetworkImage(
-              imageUrl: image!,
-              fit: BoxFit.cover,
-              width: 124,
-              height: 124,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            )
-          : null,
+      child: ClipOval(
+        child: image == null
+            ? Image.asset(
+                "assets/images/profile.jpg",
+                fit: BoxFit.cover,
+                width: 124,
+                height: 124,
+              )
+            : CachedNetworkImage(
+                imageUrl: image!,
+                fit: BoxFit.cover,
+                width: 124,
+                height: 124,
+                placeholder: (context, url) => Center(
+                  child: CircularProgressIndicator(
+                    color: context.colors.primaryColorLight,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+      ),
     );
   }
 }

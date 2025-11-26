@@ -99,6 +99,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
               );
+              BlocProvider.of<AuthBloc>(context).add(LoadCurrentUser());
               // Wait a moment then pop
               Future.delayed(const Duration(seconds: 1), () {
                 if (mounted) {

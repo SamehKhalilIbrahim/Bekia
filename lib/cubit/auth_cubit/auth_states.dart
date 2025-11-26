@@ -3,7 +3,6 @@ import '../../core/models/user_model/user_model.dart';
 abstract class AuthState {
   const AuthState();
 
-  @override
   List<Object?> get props => [];
 }
 

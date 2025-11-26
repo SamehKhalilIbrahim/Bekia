@@ -111,12 +111,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       newPassword: event.newPassword,
     );
 
-    result.fold(
-      (failure) => emit(AuthError(message: failure.error)),
-      (user) => emit(
-        const PasswordUpdated(message: 'Password updated successfully!'),
-      ),
-    );
+    result.fold((failure) => emit(AuthError(message: failure.error)), (user) {
+      emit(const PasswordUpdated(message: 'Password updated successfully!'));
+    });
   }
 
   Future<void> _onLoadCurrentUser(
@@ -145,5 +142,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (failure) => emit(AuthError(message: failure.error)),
       (_) => emit(const AuthUnauthenticated()),
     );
+  }
+
+  @override
+  void onChange(Change<AuthState> change) {
+    print(change);
+    super.onChange(change);
+  }
+
+  @override
+  void onTransition(Transition<AuthEvent, AuthState> transition) {
+    print(transition);
+    super.onTransition(transition);
   }
 }

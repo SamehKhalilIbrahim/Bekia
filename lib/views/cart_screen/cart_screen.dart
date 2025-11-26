@@ -60,7 +60,11 @@ class _CartScreenState extends State<CartScreen> {
                                 Icon(
                                   Icons.shopping_cart_outlined,
                                   size: 80,
-                                  color: Colors.grey[400],
+                                  color: context
+                                      .colors
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!,
                                 ),
                                 const SizedBox(height: 16),
                                 Text(

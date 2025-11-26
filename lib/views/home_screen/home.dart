@@ -7,7 +7,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../cubit/product_cubit/product_cubit_cubit.dart';
 import '../../cubit/category_cubit/category_cubit.dart'; // New Cubit for category selection
 
-import '../../core/ui/themes/app_color.dart';
 import '../../core/ui/themes/font.dart';
 import 'home_widgets/product_list.dart';
 import 'search/search_delegate.dart';
