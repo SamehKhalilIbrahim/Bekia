@@ -41,8 +41,6 @@ class UserModel {
     String? id,
     String? email,
     String? username,
-    String? firstName,
-    String? lastName,
     String? profileImageUrl,
     String? createdAt,
   }) {

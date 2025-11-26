@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/ui/animations/screen_transictions_animation.dart';
+import '../../core/ui/animations/screen_transactions_animation.dart';
 import '../../core/widgets/dot_slide.dart';
 import '../login_and_register/login_page.dart';
 import 'on_boarding_page.dart';

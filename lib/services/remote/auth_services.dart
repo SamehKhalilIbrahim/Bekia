@@ -48,8 +48,6 @@ class AuthService {
     required String email,
     required String password,
     required String username,
-    required String firstName,
-    required String lastName,
   }) async {
     return guard(() async {
       // Check if username is taken
@@ -75,8 +73,7 @@ class AuthService {
         'id': user.id,
         'email': email,
         'username': username,
-        'first_name': firstName,
-        'last_name': lastName,
+
         'created_at': user.createdAt,
       };
 

@@ -28,19 +28,15 @@ class RegisterRequested extends AuthEvent {
   final String email;
   final String password;
   final String username;
-  final String firstName;
-  final String lastName;
 
   const RegisterRequested({
     required this.email,
     required this.password,
     required this.username,
-    required this.firstName,
-    required this.lastName,
   });
 
   @override
-  List<Object?> get props => [email, password, username, firstName, lastName];
+  List<Object?> get props => [email, password, username];
 }
 
 class EditProfileRequested extends AuthEvent {

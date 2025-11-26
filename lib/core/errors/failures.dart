@@ -172,20 +172,22 @@ class Failure {
   }
 
   factory Failure.fromException(dynamic exception) {
-    if (exception is AuthException) {
-      return Failure.fromAuthException(exception);
-    } else if (exception is AuthApiException) {
-      return Failure.fromAuthApiException(exception);
-    } else if (exception is PostgrestException) {
-      return Failure.fromSqlException(exception);
-    } else if (exception is StorageException) {
-      return Failure.fromStorageException(exception);
-    } else if (exception is DioException) {
-      return Failure.fromDioError(exception);
-    } else if (exception is String) {
-      return Failure.fromStringException(exception);
-    } else {
-      return Failure(error: "Unexpected error occurred.");
-    }
+    // if (exception is AuthException) {
+    //   return Failure.fromAuthException(exception);
+    // } else if (exception is AuthApiException) {
+    //   return Failure.fromAuthApiException(exception);
+    // } else if (exception is PostgrestException) {
+    //   return Failure.fromSqlException(exception);
+    // } else if (exception is StorageException) {
+    //   return Failure.fromStorageException(exception);
+    // } else if (exception is DioException) {
+    //   return Failure.fromDioError(exception);
+    // } else if (exception is String) {
+    //   return Failure.fromStringException(exception);
+    // } else {
+    //   return Failure(error: "Unexpected error occurred.");
+    // }
+    print(exception.toString());
+    return Failure(error: exception.toString());
   }
 }

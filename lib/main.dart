@@ -15,7 +15,6 @@ import 'core/models/product_model/product_model.dart';
 import 'services/constants.dart';
 import 'core/ui/themes/app_theme.dart';
 import 'services/remote/supabase_config.dart';
-import 'views/home_screen/navigation.dart';
 
 void main() async {
   await SupabaseConfig.initialize();
