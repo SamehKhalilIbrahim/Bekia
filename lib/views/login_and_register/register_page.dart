@@ -25,9 +25,7 @@ class RegisterPageState extends State<RegisterPage> {
 
   final formKey = GlobalKey<FormState>();
 
-  RegExp emailRegExp = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-  );
+  RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   @override
   void dispose() {
@@ -125,6 +123,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 ),
                                 child: Column(
                                   children: [
+                                    // USERNAME
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 3,
@@ -149,16 +148,16 @@ class RegisterPageState extends State<RegisterPage> {
                                           hintText: "Username",
                                           border: InputBorder.none,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter your username';
+                                            return "Username is required";
                                           }
                                           return null;
                                         },
                                       ),
                                     ),
+
+                                    // EMAIL
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 3,
@@ -183,24 +182,20 @@ class RegisterPageState extends State<RegisterPage> {
                                           hintText: "Email",
                                           border: InputBorder.none,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter your email';
+                                            return "Email is required";
                                           } else if (!emailRegExp.hasMatch(
-                                            value,
+                                            value.trim(),
                                           )) {
-                                            if (!value.contains("@gmail.com")) {
-                                              return "Your email must have '@gmail.com'";
-                                            } else {
-                                              return 'Enter a valid email';
-                                            }
+                                            return "Enter a valid email";
                                           }
                                           return null;
                                         },
                                       ),
                                     ),
+
+                                    // PASSWORD
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 3,
@@ -216,21 +211,17 @@ class RegisterPageState extends State<RegisterPage> {
                                       child: TextFormField(
                                         controller: passwordController,
                                         obscureText: secureText,
-                                        enableSuggestions: false,
-                                        autocorrect: false,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter password';
+                                            return "Password is required";
                                           } else if (value.length < 8) {
-                                            return 'Password must be at least 8 characters long';
+                                            return "Password must be at least 8 characters";
                                           }
                                           return null;
                                         },
                                         decoration: InputDecoration(
                                           prefixIcon: Icon(
-                                            Icons.key_rounded,
+                                            Icons.lock,
                                             color: Theme.of(
                                               context,
                                             ).primaryColorLight,
@@ -243,20 +234,20 @@ class RegisterPageState extends State<RegisterPage> {
                                             },
                                             icon: Icon(
                                               secureText
-                                                  ? Icons.visibility_rounded
-                                                  : Icons
-                                                        .visibility_off_rounded,
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
                                               color: Theme.of(
                                                 context,
                                               ).primaryColorLight,
                                             ),
-                                            tooltip: 'Toggle Obscure Text',
                                           ),
                                           hintText: "Password",
                                           border: InputBorder.none,
                                         ),
                                       ),
                                     ),
+
+                                    // CONFIRM PASSWORD
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 3,
@@ -265,22 +256,18 @@ class RegisterPageState extends State<RegisterPage> {
                                       child: TextFormField(
                                         controller: confirmPasswordController,
                                         obscureText: secureText,
-                                        enableSuggestions: false,
-                                        autocorrect: false,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please confirm your password';
+                                            return "Please confirm password";
                                           } else if (value !=
                                               passwordController.text) {
-                                            return 'Passwords do not match';
+                                            return "Passwords do not match";
                                           }
                                           return null;
                                         },
                                         decoration: InputDecoration(
                                           prefixIcon: Icon(
-                                            Icons.key_rounded,
+                                            Icons.lock_outline,
                                             color: Theme.of(
                                               context,
                                             ).primaryColorLight,
@@ -293,14 +280,12 @@ class RegisterPageState extends State<RegisterPage> {
                                             },
                                             icon: Icon(
                                               secureText
-                                                  ? Icons.visibility_rounded
-                                                  : Icons
-                                                        .visibility_off_rounded,
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
                                               color: Theme.of(
                                                 context,
                                               ).primaryColorLight,
                                             ),
-                                            tooltip: 'Toggle Obscure Text',
                                           ),
                                           hintText: "Confirm Password",
                                           border: InputBorder.none,
@@ -312,6 +297,8 @@ class RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
+
+                          // SIGN UP BUTTON
                           FadeAnimation(
                             delay: 0.9,
                             child: Padding(
@@ -321,10 +308,10 @@ class RegisterPageState extends State<RegisterPage> {
                               ),
                               child: BlocBuilder<AuthBloc, AuthState>(
                                 builder: (context, state) {
-                                  final isLoading = state is AuthLoading;
+                                  final loading = state is AuthLoading;
 
                                   return ElevatedButton(
-                                    onPressed: isLoading
+                                    onPressed: loading
                                         ? null
                                         : () {
                                             if (formKey.currentState!
@@ -346,15 +333,15 @@ class RegisterPageState extends State<RegisterPage> {
                                       backgroundColor: Theme.of(
                                         context,
                                       ).primaryColorLight,
-                                      minimumSize: Size(
-                                        context.width * 0.5,
+                                      minimumSize: const Size(
+                                        double.infinity,
                                         50,
                                       ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(50),
                                       ),
                                     ),
-                                    child: isLoading
+                                    child: loading
                                         ? const SizedBox(
                                             height: 20,
                                             width: 20,
@@ -367,7 +354,7 @@ class RegisterPageState extends State<RegisterPage> {
                                             ),
                                           )
                                         : const Text(
-                                            'Sign Up',
+                                            "Sign Up",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
@@ -379,6 +366,8 @@ class RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
+
+                          const SizedBox(height: 40),
                         ],
                       ),
                     ),

@@ -27,9 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final formkey = GlobalKey<FormState>();
 
-  RegExp alphaNumeric = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-  );
+  RegExp emailValidator = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   @override
   void dispose() {
@@ -110,6 +108,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           const SizedBox(height: 50),
+
+                          // INPUT FIELDS
                           FadeAnimation(
                             delay: 0.7,
                             child: Padding(
@@ -121,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 child: Column(
                                   children: [
+                                    // EMAIL
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 5,
@@ -150,15 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter your email';
-                                          } else if (!alphaNumeric.hasMatch(
-                                            value,
+                                            return 'Email is required';
+                                          } else if (!emailValidator.hasMatch(
+                                            value.trim(),
                                           )) {
-                                            if (!value.contains("@gmail.com")) {
-                                              return "Your mail must has '@gmail.com'";
-                                            } else {
-                                              return 'Enter a valid mail';
-                                            }
+                                            return 'Enter a valid email';
                                           }
                                           return null;
                                         },
@@ -166,6 +163,8 @@ class _LoginPageState extends State<LoginPage> {
                                             AutovalidateMode.onUserInteraction,
                                       ),
                                     ),
+
+                                    // PASSWORD
                                     Container(
                                       padding: const EdgeInsets.only(
                                         top: 3,
@@ -183,12 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                                             AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter password';
-                                          } else {
-                                            if (alphaNumeric.hasMatch(value) ||
-                                                value.length <= 8) {
-                                              return 'Enter a valid password';
-                                            }
+                                            return 'Password is required';
                                           }
                                           return null;
                                         },
@@ -214,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                               ).primaryColorLight,
                                             ),
-                                            tooltip: 'Toggle Obscure Text',
                                           ),
                                           hintText: "Password",
                                           border: InputBorder.none,
@@ -226,6 +219,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+
+                          // FORGOT PASSWORD
                           FadeAnimation(
                             delay: 0.8,
                             child: GestureDetector(
@@ -239,6 +234,10 @@ class _LoginPageState extends State<LoginPage> {
                               child: const Text("Forget Password?"),
                             ),
                           ),
+
+                          const SizedBox(height: 15),
+
+                          // LOGIN BUTTON
                           FadeAnimation(
                             delay: 0.8,
                             child: Padding(
@@ -271,8 +270,8 @@ class _LoginPageState extends State<LoginPage> {
                                       backgroundColor: Theme.of(
                                         context,
                                       ).primaryColorLight,
-                                      minimumSize: Size(
-                                        context.width * 0.5,
+                                      minimumSize: const Size(
+                                        double.infinity,
                                         50,
                                       ),
                                       shape: RoundedRectangleBorder(
@@ -287,9 +286,7 @@ class _LoginPageState extends State<LoginPage> {
                                               strokeWidth: 2,
                                               valueColor:
                                                   AlwaysStoppedAnimation<Color>(
-                                                    context
-                                                        .colors
-                                                        .primaryColorLight,
+                                                    Colors.white,
                                                   ),
                                             ),
                                           )
@@ -306,31 +303,16 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          FadeAnimation(
-                            delay: 0.9,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/icons/gmail.png",
-                                  height: context.height / 17,
-                                ),
-                                const SizedBox(width: 20),
-                                Image.asset(
-                                  "assets/images/icons/facebook.png",
-                                  height: context.height / 17,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 5),
+
+                          const SizedBox(height: 10),
+
                           FadeAnimation(
                             delay: 1,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Don't have an account?  ",
+                                  "Don't have an account? ",
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 GestureDetector(
@@ -345,12 +327,15 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Theme.of(
                                         context,
                                       ).primaryColorLight,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+
+                          const SizedBox(height: 40),
                         ],
                       ),
                     ),

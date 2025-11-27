@@ -461,7 +461,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
                                           ),
                                         ),
                                         child: isLoading
-                                            ? const SizedBox(
+                                            ? SizedBox(
                                                 height: 20,
                                                 width: 20,
                                                 child: CircularProgressIndicator(
@@ -469,7 +469,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
                                                   valueColor:
                                                       AlwaysStoppedAnimation<
                                                         Color
-                                                      >(Colors.white),
+                                                      >(
+                                                        context
+                                                            .colors
+                                                            .primaryColorLight,
+                                                      ),
                                                 ),
                                               )
                                             : const Text(
