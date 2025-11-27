@@ -88,4 +88,9 @@ class HiveCubit extends Cubit<HiveState> {
     }
     return 0;
   }
+
+  void clearCart() {
+    cartBox.clear();
+    emit(HiveChangeCartState());
+  }
 }

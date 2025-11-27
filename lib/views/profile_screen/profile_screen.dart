@@ -261,10 +261,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                         onTap: () {
                           context.read<AuthBloc>().add(LogoutRequested());
 
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.pushReplacement(
                             context,
                             SmoothSlideRoute(page: const LoginPage()),
-                            (route) => false,
                           );
                         },
                         suffixWidget: Icon(

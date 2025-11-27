@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:bekia/services/constants.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/errors/failures.dart';
 import '../../core/errors/error_handler.dart';
+import '../../core/models/product_model/product_model.dart';
 import '../../core/models/user_model/user_model.dart';
 import 'image_upload_service.dart';
 
@@ -227,10 +230,16 @@ class AuthService {
   // Logout
   Future<Either<Failure, Unit>> logout() async {
     return guard(() async {
+      // 1. Sign out from Supabase
       await _supabase.auth.signOut();
 
+      // 2. Remove remember_me preference
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove("remember_me");
+
+      // 3. Clear local Hive data (cart and favorites)
+      await Hive.box<Product>(HiveConstant.cartProductBox).clear();
+      await Hive.box<Product>(HiveConstant.favoritesProductBox).clear();
 
       return unit;
     });

@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../core/ui/themes/app_color.dart';
+import '../../../core/ui/themes/font.dart';
 import '../../../core/utils/custom_snack_bar.dart';
 import '../../../cubit/auth_cubit/auth_bloc.dart';
 import '../../../cubit/auth_cubit/auth_event.dart';
@@ -115,27 +117,69 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Confirm Password'),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: Text(
+            'Confirm Password',
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[800]
+                  : AppColor.textColorDark,
+              fontFamily: Font.bold,
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
+              Text(
                 'Please enter your current password to update your email.',
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Theme.of(context).hintColor,
+                  fontFamily: Font.regular,
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: passwordController,
                 obscureText: !isPasswordVisible,
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : AppColor.textColorDark,
+                ),
                 decoration: InputDecoration(
                   labelText: 'Current Password',
-                  border: const OutlineInputBorder(),
-                  prefixIcon: const Icon(FluentIcons.lock_closed_20_regular),
+                  labelStyle: TextStyle(color: Theme.of(context).hintColor),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[400]!
+                          : AppColor.dividerColorDark,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[400]!
+                          : AppColor.dividerColorDark,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColorLight,
+                      width: 2,
+                    ),
+                  ),
+                  prefixIcon: Icon(
+                    FluentIcons.lock_closed_20_regular,
+                    color: Theme.of(context).hintColor,
+                  ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       isPasswordVisible
                           ? FluentIcons.eye_24_regular
                           : FluentIcons.eye_off_24_regular,
+                      color: Theme.of(context).hintColor,
                     ),
                     onPressed: () {
                       setDialogState(() {
@@ -150,7 +194,13 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).hintColor,
+              ),
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontFamily: Font.semiBold),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -163,7 +213,17 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
                   ),
                 );
               },
-              child: const Text('Confirm'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColorLight,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Confirm',
+                style: TextStyle(fontFamily: Font.semiBold),
+              ),
             ),
           ],
         ),

@@ -48,11 +48,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                 Icon(
                                   FluentIcons.board_heart_24_filled,
                                   size: 80,
-                                  color: context
-                                      .colors
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color!,
+                                  color: Theme.of(
+                                    context,
+                                  ).primaryColorLight.withValues(alpha: .9),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(

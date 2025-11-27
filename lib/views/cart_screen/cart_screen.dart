@@ -1,12 +1,7 @@
 import 'package:bekia/cubit/hive_cubit/hive_cubit.dart';
-import 'package:bekia/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/adapters.dart';
-
 import '../../core/models/product_model/product_model.dart';
-import '../../core/utils/custom_snack_bar.dart';
-import '../../services/constants.dart';
 import 'cart_product_card.dart';
 
 class CartScreen extends StatefulWidget {
@@ -19,8 +14,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final Box<Product> cartBox = Hive.box<Product>(HiveConstant.cartProductBox);
-
   double _calculateTotal(List<Product> products) {
     return products.fold(
       0.0,
@@ -32,12 +25,152 @@ class _CartScreenState extends State<CartScreen> {
     return products.fold(0, (sum, product) => sum + product.quantity);
   }
 
+  void _showPaymentSuccessOverlay(
+    BuildContext context,
+    double totalPrice,
+    int totalItems,
+  ) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return Dialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 64,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'Payment Successful!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Your order has been placed successfully',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
+                const SizedBox(height: 24),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Total Items:',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '$totalItems',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Total Amount:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '\$${totalPrice.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Continue Shopping',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _handleCheckout(
+    BuildContext context,
+    double totalPrice,
+    int totalItems,
+  ) {
+    // Use cubit to clear cart and trigger UI update
+    context.read<HiveCubit>().clearCart();
+
+    // Show success overlay
+    _showPaymentSuccessOverlay(context, totalPrice, totalItems);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<HiveCubit, HiveState>(
         builder: (context, state) {
-          final cartProducts = cartBox.values.toList();
+          final cartProducts = context
+              .read<HiveCubit>()
+              .cartBox
+              .values
+              .toList();
           final totalPrice = _calculateTotal(cartProducts);
           final totalItems = _calculateTotalItems(cartProducts);
 
@@ -47,13 +180,12 @@ class _CartScreenState extends State<CartScreen> {
               decelerationRate: ScrollDecelerationRate.fast,
             ),
             slivers: [
-              // Cart Items Grid
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 sliver: cartProducts.isEmpty
                     ? SliverToBoxAdapter(
                         child: SizedBox(
-                          height: context.height * 0.8,
+                          height: MediaQuery.of(context).size.height * 0.8,
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,11 +193,9 @@ class _CartScreenState extends State<CartScreen> {
                                 Icon(
                                   Icons.shopping_cart_outlined,
                                   size: 80,
-                                  color: context
-                                      .colors
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color!,
+                                  color: Theme.of(
+                                    context,
+                                  ).primaryColorLight.withValues(alpha: .9),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
@@ -103,8 +233,6 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                       ),
               ),
-
-              // Bottom Summary Section (only show when cart is not empty)
               if (cartProducts.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Padding(
@@ -113,8 +241,6 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         const Divider(thickness: 1),
                         const SizedBox(height: 16),
-
-                        // Total Items
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -135,8 +261,6 @@ class _CartScreenState extends State<CartScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
-
-                        // Total Price
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -158,22 +282,15 @@ class _CartScreenState extends State<CartScreen> {
                           ],
                         ),
                         const SizedBox(height: 24),
-
-                        // Checkout Button
                         SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // TODO: Implement checkout functionality
-
-                              showCustomSnackBar(
-                                context: context,
-                                backgroundColor:
-                                    context.colors.primaryColorLight,
-                                message: 'Checkout functionality coming soon!',
-                              );
-                            },
+                            onPressed: () => _handleCheckout(
+                              context,
+                              totalPrice,
+                              totalItems,
+                            ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(
                                 context,
