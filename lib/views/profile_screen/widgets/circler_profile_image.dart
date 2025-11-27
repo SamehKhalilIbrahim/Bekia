@@ -1,6 +1,9 @@
 import 'package:bekia/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+
+import '../../home_screen/shimmer/shimmer.dart';
 
 class CirclerProfileImage extends StatelessWidget {
   final bool showBorder;
@@ -24,21 +27,28 @@ class CirclerProfileImage extends StatelessWidget {
       ),
       child: ClipOval(
         child: image == null
-            ? Image.asset(
-                "assets/images/profile.jpg",
-                fit: BoxFit.cover,
-                width: 124,
-                height: 124,
+            ? Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: context.colors.cardColor.withOpacity(0.2),
+                ),
+                child: Icon(
+                  FluentIcons.person_48_regular,
+                  size: 62,
+                  color: context.colors.primaryColorLight,
+                ),
               )
             : CachedNetworkImage(
                 imageUrl: image!,
                 fit: BoxFit.cover,
                 width: 124,
                 height: 124,
-                placeholder: (context, url) => Center(
-                  child: CircularProgressIndicator(
-                    color: context.colors.primaryColorLight,
-                  ),
+                placeholder: (context, url) => ShimmerImage(
+                  width: 124,
+                  hight: 124,
+                  borderRadius: 62, // Make it circular
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),

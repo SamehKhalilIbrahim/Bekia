@@ -24,7 +24,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   bool _isCurrentPasswordVisible = false;
   bool _isNewPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
+  final bool _isConfirmPasswordVisible = false;
 
   @override
   void initState() {
@@ -275,30 +275,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     hintText: "Confirm Password",
                                     prefixIcon:
                                         FluentIcons.lock_closed_20_regular,
-                                    obscureText: !_isConfirmPasswordVisible,
+                                    obscureText: true,
                                     validator: _validateConfirmPassword,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 12),
-                                    child: IconButton(
-                                      icon: Icon(
-                                        _isConfirmPasswordVisible
-                                            ? FluentIcons.eye_24_regular
-                                            : FluentIcons.eye_off_24_regular,
-                                        size: 20,
-                                        color: context
-                                            .colors
-                                            .textTheme
-                                            .bodyMedium!
-                                            .color!,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isConfirmPasswordVisible =
-                                              !_isConfirmPasswordVisible;
-                                        });
-                                      },
-                                    ),
                                   ),
                                 ],
                               ),

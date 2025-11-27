@@ -256,6 +256,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
               _currentImageUrl = state.user.profileImageUrl;
               _selectedImage = null;
             });
+            BlocProvider.of<AuthBloc>(context).add(LoadCurrentUser());
           } else if (state is AuthError) {
             showCustomSnackBar(
               context: context,
