@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/utils/custom_snack_bar.dart';
 import '../../../cubit/hive_cubit/hive_cubit.dart';
 import '../../../core/models/product_model/product_model.dart';
 import '../../../core/ui/themes/font.dart';
@@ -350,13 +351,11 @@ class ProductInfo extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         cubit.addToCart(product);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${product.name} added to cart'),
-            duration: const Duration(seconds: 2),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Theme.of(context).primaryColorLight,
-          ),
+
+        showCustomSnackBar(
+          context: context,
+          backgroundColor: context.colors.primaryColorLight,
+          message: '${product.name} added to cart',
         );
       },
       style: ElevatedButton.styleFrom(
@@ -403,12 +402,10 @@ class ProductInfo extends StatelessWidget {
               onPressed: () {
                 cubit.decreaseQuantity(product);
                 if (quantity == 1) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${product.name} removed from cart'),
-                      duration: const Duration(seconds: 2),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                  showCustomSnackBar(
+                    context: context,
+                    backgroundColor: context.colors.primaryColorLight,
+                    message: '${product.name} removed from cart',
                   );
                 }
               },

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../core/models/product_model/product_model.dart';
+import '../../core/utils/custom_snack_bar.dart';
 import '../../services/constants.dart';
 import 'cart_product_card.dart';
 
@@ -165,12 +166,12 @@ class _CartScreenState extends State<CartScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               // TODO: Implement checkout functionality
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Checkout functionality coming soon!',
-                                  ),
-                                ),
+
+                              showCustomSnackBar(
+                                context: context,
+                                backgroundColor:
+                                    context.colors.primaryColorLight,
+                                message: 'Checkout functionality coming soon!',
                               );
                             },
                             style: ElevatedButton.styleFrom(

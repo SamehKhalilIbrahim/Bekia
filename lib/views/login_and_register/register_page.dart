@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/ui/animations/fade_animation.dart';
 import '../../core/ui/themes/app_color.dart';
+import '../../core/utils/custom_snack_bar.dart';
 import '../../cubit/auth_cubit/auth_bloc.dart';
 import '../../cubit/auth_cubit/auth_event.dart';
 import '../../cubit/auth_cubit/auth_states.dart';
@@ -42,19 +43,17 @@ class RegisterPageState extends State<RegisterPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.green,
-              ),
+            showCustomSnackBar(
+              context: context,
+              backgroundColor: Colors.green,
+              message: state.message,
             );
             Navigator.pop(context);
           } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
+            showCustomSnackBar(
+              context: context,
+              backgroundColor: context.colors.primaryColorLight,
+              message: state.message,
             );
           }
         },
@@ -255,7 +254,7 @@ class RegisterPageState extends State<RegisterPage> {
                                       ),
                                       child: TextFormField(
                                         controller: confirmPasswordController,
-                                        obscureText: secureText,
+                                        obscureText: true,
                                         validator: (value) {
                                           if (value!.isEmpty) {
                                             return "Please confirm password";
@@ -272,21 +271,7 @@ class RegisterPageState extends State<RegisterPage> {
                                               context,
                                             ).primaryColorLight,
                                           ),
-                                          suffixIcon: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                secureText = !secureText;
-                                              });
-                                            },
-                                            icon: Icon(
-                                              secureText
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Theme.of(
-                                                context,
-                                              ).primaryColorLight,
-                                            ),
-                                          ),
+
                                           hintText: "Confirm Password",
                                           border: InputBorder.none,
                                         ),
@@ -342,14 +327,16 @@ class RegisterPageState extends State<RegisterPage> {
                                       ),
                                     ),
                                     child: loading
-                                        ? const SizedBox(
+                                        ? SizedBox(
                                             height: 20,
                                             width: 20,
                                             child: CircularProgressIndicator(
                                               strokeWidth: 2,
                                               valueColor:
                                                   AlwaysStoppedAnimation<Color>(
-                                                    Colors.white,
+                                                    context
+                                                        .colors
+                                                        .primaryColorLight,
                                                   ),
                                             ),
                                           )

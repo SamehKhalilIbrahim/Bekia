@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/models/product_model/product_model.dart';
 import '../../core/ui/themes/font.dart';
+import '../../core/utils/custom_snack_bar.dart';
 import '../home_screen/shimmer/shimmer.dart';
 
 class CartProductCard extends StatelessWidget {
@@ -103,11 +104,11 @@ class CartProductCard extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 context.read<HiveCubit>().removeFromCart(product.id);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${product.name} removed from cart'),
-                    duration: const Duration(seconds: 1),
-                  ),
+
+                showCustomSnackBar(
+                  context: context,
+                  backgroundColor: context.colors.primaryColorLight,
+                  message: '${product.name} removed from cart',
                 );
               },
               icon: Icon(Icons.delete_outline, color: Colors.red[400]),

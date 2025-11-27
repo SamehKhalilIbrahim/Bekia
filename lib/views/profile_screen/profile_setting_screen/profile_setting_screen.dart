@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../core/utils/custom_snack_bar.dart';
 import '../../../cubit/auth_cubit/auth_bloc.dart';
 import '../../../cubit/auth_cubit/auth_event.dart';
 import '../../../cubit/auth_cubit/auth_states.dart';
@@ -184,15 +185,10 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.green,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+            showCustomSnackBar(
+              context: context,
+              backgroundColor: Colors.green,
+              message: state.message,
             );
             // Update local state with new data
             setState(() {
@@ -201,15 +197,10 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
               _selectedImage = null;
             });
           } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+            showCustomSnackBar(
+              context: context,
+              backgroundColor: context.colors.primaryColorLight,
+              message: state.message,
             );
           }
         },

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/ui/animations/fade_animation.dart';
 import '../../core/ui/animations/screen_transactions_animation.dart';
+import '../../core/utils/custom_snack_bar.dart';
 import '../../cubit/auth_cubit/auth_bloc.dart';
 import '../../cubit/auth_cubit/auth_event.dart';
 import '../../cubit/auth_cubit/auth_states.dart';
@@ -47,11 +48,10 @@ class _LoginPageState extends State<LoginPage> {
               FadePageRoute(page: NavigationScreen()),
             );
           } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
+            showCustomSnackBar(
+              context: context,
+              backgroundColor: context.colors.primaryColorLight,
+              message: state.message,
             );
           }
         },
@@ -286,7 +286,9 @@ class _LoginPageState extends State<LoginPage> {
                                               strokeWidth: 2,
                                               valueColor:
                                                   AlwaysStoppedAnimation<Color>(
-                                                    Colors.white,
+                                                    context
+                                                        .colors
+                                                        .primaryColorLight,
                                                   ),
                                             ),
                                           )
