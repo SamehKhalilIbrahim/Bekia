@@ -50,7 +50,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
       vsync: this,
     );
 
-    _headerAnimation = Tween<double>(begin: 150, end: 55).animate(
+    _headerAnimation = Tween<double>(begin: 150, end: 50).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.ease),
     );
 
@@ -114,6 +114,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
     bool isPasswordVisible = false;
 
     showDialog(
+      useSafeArea: true,
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
@@ -539,8 +540,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen>
                               ),
                             ),
                           ),
-
-                          const SizedBox(height: 80),
                         ],
                       ),
                     ),
