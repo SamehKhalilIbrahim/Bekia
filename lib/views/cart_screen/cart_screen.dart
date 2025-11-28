@@ -154,11 +154,10 @@ class _CartScreenState extends State<CartScreen> {
     double totalPrice,
     int totalItems,
   ) {
-    // Use cubit to clear cart and trigger UI update
-    context.read<HiveCubit>().clearCart();
-
     // Show success overlay
     _showPaymentSuccessOverlay(context, totalPrice, totalItems);
+    // Use cubit to clear cart and trigger UI update
+    context.read<HiveCubit>().clearCart();
   }
 
   @override

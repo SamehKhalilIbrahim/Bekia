@@ -100,7 +100,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+        filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           width: 200,
